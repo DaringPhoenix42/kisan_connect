@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}Fasal Salah - Crop Advisory | Kisan Mitra{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12 text-center mb-5">
+            <h1 class="display-4 fw-bold text-success">
+                <i class="fas fa-leaf me-3"></i>Fasal Salah
+            </h1>
+            <p class="lead text-muted">Get AI-powered crop recommendations based on your location, soil type, and market conditions</p>
+        </div>
+    </div>
+
+    <!-- Input Form -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="form-container">
+                <h3 class="text-center mb-4">
+                    <i class="fas fa-map-marker-alt me-2"></i>Crop Recommendation Form
+                </h3>
+                
+                <form id="cropRecommendationForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="location" class="form-label">
+                                <i class="fas fa-map-marker-alt me-1"></i>Location
+                            </label>
+                            <select class="form-select" id="location" name="location" required>
+                                <option value="">Select your location</option>
+                                <option value="Nashik" selected>Nashik, Maharashtra</option>
+                                <option value="Pune">Pune, Maharashtra</option>
+                                <option value="Aurangabad">Aurangabad, Maharashtra</option>
+                                <option value="Nagpur">Nagpur, Maharashtra</option>
+                                <option value="Mumbai">Mumbai, Maharashtra</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="soilType" class="form-label">
+                                <i class="fas fa-layer-group me-1"></i>Soil Type
+                            </label>
+                            <select class="form-select" id="soilType" name="soilType" required>
+                                <option value="">Select soil type</option>
+                                <option value="Black Soil" selected>Black Soil (Regur)</option>
+                                <option value="Red Soil">Red Soil</option>
+                                <option value="Alluvial Soil">Alluvial Soil</option>
+                                <option value="Laterite Soil">Laterite Soil</option>
+                                <option value="Sandy Soil">Sandy Soil</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="irrigation" class="form-label">
+                                <i class="fas fa-tint me-1"></i>Irrigation Type
+                            </label>
+                            <select class="form-select" id="irrigation" name="irrigation" required>
+                                <option value="">Select irrigation type</option>
+                                <option value="Rain-fed" selected>Rain-fed</option>
+                                <option value="Canal">Canal Irrigation</option>
+                                <option value="Borewell">Borewell</option>
+                                <option value="Drip">Drip Irrigation</option>
+                                <option value="Sprinkler">Sprinkler</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="landArea" class="form-label">
+                                <i class="fas fa-ruler-combined me-1"></i>Land Area (Acres)
+                            </label>
+                            <input type="number" class="form-control" id="landArea" name="landArea" 
+                                   placeholder="Enter land area" min="0.1" step="0.1" value="5" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="season" class="form-label">
+                                <i class="fas fa-calendar-alt me-1"></i>Growing Season
+                            </label>
+                            <select class="form-select" id="season" name="season" required>
+                                <option value="Kharif" selected>Kharif (Monsoon)</option>
+                                <option value="Rabi">Rabi (Winter)</option>
+                                <option value="Zaid">Zaid (Summer)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="budget" class="form-label">
+                                <i class="fas fa-rupee-sign me-1"></i>Investment Budget (₹)
+                            </label>
+                            <input type="number" class="form-control" id="budget" name="budget" 
+                                   placeholder="Enter budget" min="1000" step="1000" value="50000" required>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg me-3" id="getRecommendations">
+                            <i class="fas fa-magic me-2"></i>Get AI Recommendations
+                        </button>
+                        <button type="button" class="btn btn-info btn-lg" id="yieldPredictionBtn">
+                            <i class="fas fa-chart-line me-2"></i>Yield Prediction
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" style="display: none;">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="results-container">
+                    <h3 class="text-center mb-4">
+                        <i class="fas fa-chart-line me-2"></i>AI Crop Recommendations
+                    </h3>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Analysis for:</strong> <span id="analysisLocation"></span> | 
+                        <strong>Soil:</strong> <span id="analysisSoil"></span> | 
+                        <strong>Irrigation:</strong> <span id="analysisIrrigation"></span>
+                        <div id="aiStatus" class="mt-2" style="display: none;">
+                            <span class="badge bg-success">
+                                <i class="fas fa-robot me-1"></i>AI-Powered Analysis
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div id="recommendationsList"></div>
+                    
+                    <div class="market-data mt-4">
+                        <h4><i class="fas fa-chart-bar me-2"></i>Current Market Prices</h4>
+                        <div id="marketPrices"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Information Cards -->
+    <div class="row mt-5">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-robot fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">AI-Powered Analysis</h5>
+                    <p class="card-text">Our advanced AI analyzes multiple factors including weather patterns, market trends, and soil conditions to provide accurate recommendations.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Market Intelligence</h5>
+                    <p class="card-text">Get real-time market prices and demand forecasts to make informed decisions about which crops to grow for maximum profitability.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-leaf fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Sustainable Farming</h5>
+                    <p class="card-text">Our recommendations consider environmental factors and promote sustainable farming practices for long-term soil health.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('cropRecommendationForm');
+    const resultsSection = document.getElementById('resultsSection');
+    const getRecommendationsBtn = document.getElementById('getRecommendations');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!KisanMitra.validateForm(form)) {
+            KisanMitra.showError('Please fill in all required fields');
+            return;
+        }
+        
+        const formData = new FormData(form);
+        const data = {
+            location: formData.get('location'),
+            soil_type: formData.get('soilType'),
+            irrigation: formData.get('irrigation'),
+            land_area: parseFloat(formData.get('landArea')),
+            season: formData.get('season'),
+            budget: parseInt(formData.get('budget'))
+        };
+        
+        // Show loading
+        const originalText = getRecommendationsBtn.innerHTML;
+        KisanMitra.showLoading(getRecommendationsBtn);
+        
+        try {
+            const response = await KisanMitra.API.post('/api/crop-recommendation', data);
+            displayRecommendations(response);
+            KisanMitra.showSuccess('Crop recommendations generated successfully!');
+        } catch (error) {
+            console.error('Error:', error);
+            KisanMitra.showError('Failed to get recommendations. Please try again.');
+        } finally {
+            KisanMitra.hideLoading(getRecommendationsBtn, originalText);
+        }
+    });
+    
+    function displayRecommendations(data) {
+        // Update analysis info
+        document.getElementById('analysisLocation').textContent = data.location;
+        document.getElementById('analysisSoil').textContent = data.recommendations[0]?.data?.name || 'N/A';
+        document.getElementById('analysisIrrigation').textContent = data.recommendations[0]?.data?.name || 'N/A';
+        
+        // Show AI status if AI was used
+        const aiStatus = document.getElementById('aiStatus');
+        if (data.ai_used) {
+            aiStatus.style.display = 'block';
+        } else {
+            aiStatus.style.display = 'none';
+        }
+        
+        // Display recommendations
+        const recommendationsList = document.getElementById('recommendationsList');
+        recommendationsList.innerHTML = '';
+        
+        data.recommendations.forEach((rec, index) => {
+            const cropData = rec.data;
+            const confidenceColor = rec.confidence >= 80 ? 'success' : rec.confidence >= 60 ? 'warning' : 'danger';
+            
+            const recommendationHtml = `
+                <div class="crop-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="mb-2">
+                                <i class="fas fa-seedling me-2"></i>${cropData.name}
+                                <span class="badge bg-${confidenceColor} ms-2">${rec.confidence}% Match</span>
+                            </h4>
+                            <p class="text-muted mb-3">${rec.reason}</p>
+                            
+                            <div class="crop-stats">
+                                <div class="stat-item">
+                                    <div class="label">MSP (₹/Quintal)</div>
+                                    <div class="value">${KisanMitra.formatCurrency(cropData.msp)}</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="label">Water Need</div>
+                                    <div class="value">${cropData.water_need}</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="label">Harvest Time</div>
+                                    <div class="value">${cropData.harvest_time}</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="label">Risk Level</div>
+                                    <div class="value">${cropData.risk}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="progress mb-2" style="height: 20px;">
+                                <div class="progress-bar bg-${confidenceColor}" 
+                                     style="width: ${rec.confidence}%" 
+                                     role="progressbar">
+                                    ${rec.confidence}%
+                                </div>
+                            </div>
+                            <small class="text-muted">Confidence Score</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            recommendationsList.innerHTML += recommendationHtml;
+        });
+        
+        // Display market prices
+        const marketPrices = document.getElementById('marketPrices');
+        marketPrices.innerHTML = '';
+        
+        Object.entries(data.market_data).forEach(([crop, price]) => {
+            marketPrices.innerHTML += `
+                <div class="price-item">
+                    <span><strong>${crop.charAt(0).toUpperCase() + crop.slice(1)}</strong></span>
+                    <span class="fs-5">${KisanMitra.formatCurrency(price)}</span>
+                </div>
+            `;
+        });
+        
+        // Show results
+        resultsSection.style.display = 'block';
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Yield Prediction Feature
+    const yieldPredictionBtn = document.getElementById('yieldPredictionBtn');
+    
+    yieldPredictionBtn.addEventListener('click', async function() {
+        // Get form data
+        const location = document.getElementById('location').value;
+        const soilType = document.getElementById('soilType').value;
+        const irrigation = document.getElementById('irrigation').value;
+        const landArea = parseFloat(document.getElementById('landArea').value);
+        const season = document.getElementById('season').value;
+        
+        if (!location || !soilType || !irrigation || !landArea) {
+            KisanMitra.showError('Please fill in all required fields for yield prediction');
+            return;
+        }
+        
+        const originalText = yieldPredictionBtn.innerHTML;
+        KisanMitra.showLoading(yieldPredictionBtn);
+        
+        try {
+            // Get AI-powered yield prediction
+            const response = await KisanMitra.API.post('/api/crop-yield-prediction', {
+                crop: 'soybean', // Default crop, can be enhanced
+                land_area: landArea,
+                soil_type: soilType,
+                irrigation_type: irrigation,
+                fertilizer_used: 'NPK 20:20:20',
+                weather_condition: 'Normal monsoon',
+                location: location
+            });
+            
+            // Show yield prediction results
+            const resultsSection = document.getElementById('resultsSection');
+            const recommendationsList = document.getElementById('recommendationsList');
+            
+            recommendationsList.innerHTML = `
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-chart-line me-2"></i>Yield Prediction Analysis</h6>
+                    <p class="mb-0">AI-powered yield estimation for your farming conditions</p>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-weight me-2"></i>Expected Yield
+                                </h5>
+                                <div class="yield-info">
+                                    <p><strong>Per Acre:</strong> ${response.expected_yield_per_acre}</p>
+                                    <p><strong>Total:</strong> ${response.total_expected_yield}</p>
+                                    <p><strong>Confidence:</strong> <span class="badge bg-success">${response.confidence_level}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-rupee-sign me-2"></i>Revenue Projection
+                                </h5>
+                                <div class="revenue-info">
+                                    <p><strong>Expected Revenue:</strong> ${response.expected_revenue}</p>
+                                    <p><strong>Market Price:</strong> ${response.market_price_assumption}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-plus-circle me-2"></i>Positive Factors
+                                </h5>
+                                <ul class="list-unstyled">
+                                    ${response.yield_factors.positive_factors.map(factor => 
+                                        `<li><i class="fas fa-check text-success me-2"></i>${factor}</li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>Risk Factors
+                                </h5>
+                                <ul class="list-unstyled">
+                                    ${response.yield_factors.negative_factors.map(factor => 
+                                        `<li><i class="fas fa-exclamation text-warning me-2"></i>${factor}</li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card border-0 shadow-sm mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-success">
+                            <i class="fas fa-lightbulb me-2"></i>Optimization Tips
+                        </h5>
+                        <ul class="list-unstyled">
+                            ${response.optimization_tips.map(tip => 
+                                `<li><i class="fas fa-arrow-right text-info me-2"></i>${tip}</li>`
+                            ).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+            
+            if (response.ai_used) {
+                KisanMitra.showSuccess('🤖 AI-powered yield prediction completed!');
+            } else {
+                KisanMitra.showSuccess('Yield prediction completed!');
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+            KisanMitra.showError('Failed to get yield prediction. Please try again.');
+        } finally {
+            KisanMitra.hideLoading(yieldPredictionBtn, originalText);
+        }
+    });
+});
+</script>
+{% endblock %} 

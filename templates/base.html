@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kisan Mitra - Farmer's Friend{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Inter (Modern, Clean Font) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <div class="logo-container me-2">
+                    <i class="fas fa-seedling logo-icon"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">Kisan Mitra</span>
+                    <span class="brand-tagline">Farmer's Friend</span>
+                </div>
+            </a>
+            
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Navigation Menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('fasal_salah') }}">
+                            <i class="fas fa-leaf me-1"></i>Fasal Salah
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('mandi_connect') }}">
+                            <i class="fas fa-store me-1"></i>Mandi Connect
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('paudha_rakshak') }}">
+                            <i class="fas fa-shield-alt me-1"></i>Paudha Rakshak
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('resource_optimizer') }}">
+                            <i class="fas fa-tint me-1"></i>Resource Optimizer
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('gyan_kendra') }}">
+                            <i class="fas fa-graduation-cap me-1"></i>Gyan Kendra
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('farm_management') }}">
+                            <i class="fas fa-tractor me-1"></i>Farm Management
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Theme Toggle -->
+                <div class="theme-toggle-container ms-3">
+                    <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-sun light-icon"></i>
+                        <i class="fas fa-moon dark-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Brand and Description -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="footer-brand">
+                        <div class="logo-container me-2 mb-3">
+                            <i class="fas fa-seedling logo-icon"></i>
+                        </div>
+                        <div>
+                            <h5 class="brand-name mb-2">Kisan Mitra</h5>
+                            <p class="brand-tagline mb-3">Empowering Indian farmers with AI-driven solutions for better agriculture.</p>
+                            <p class="footer-description">Your trusted companion in modern farming. Get expert advice, market insights, and smart solutions to maximize your agricultural productivity.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="footer-heading mb-3">Quick Links</h6>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="{{ url_for('index') }}" class="footer-link"><i class="fas fa-home me-2"></i>Home</a></li>
+                        <li><a href="{{ url_for('fasal_salah') }}" class="footer-link"><i class="fas fa-leaf me-2"></i>Fasal Salah</a></li>
+                        <li><a href="{{ url_for('mandi_connect') }}" class="footer-link"><i class="fas fa-store me-2"></i>Mandi Connect</a></li>
+                        <li><a href="{{ url_for('paudha_rakshak') }}" class="footer-link"><i class="fas fa-shield-alt me-2"></i>Paudha Rakshak</a></li>
+                        <li><a href="{{ url_for('resource_optimizer') }}" class="footer-link"><i class="fas fa-tint me-2"></i>Resource Optimizer</a></li>
+                        <li><a href="{{ url_for('gyan_kendra') }}" class="footer-link"><i class="fas fa-graduation-cap me-2"></i>Gyan Kendra</a></li>
+                        <li><a href="{{ url_for('farm_management') }}" class="footer-link"><i class="fas fa-tractor me-2"></i>Farm Management</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support & Resources -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="footer-heading mb-3">Support</h6>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="#" class="footer-link"><i class="fas fa-question-circle me-2"></i>Help Center</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-book me-2"></i>User Guide</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-phone me-2"></i>Contact Us</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-bug me-2"></i>Report Issue</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-lightbulb me-2"></i>Feature Request</a></li>
+                        <li><a href="#" class="footer-link"><i class="fas fa-download me-2"></i>Download App</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h6 class="footer-heading mb-3">Contact Us</h6>
+                    <div class="contact-info">
+                        <div class="contact-item mb-3">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            <span>Nashik, Maharashtra, India</span>
+                        </div>
+                        <div class="contact-item mb-3">
+                            <i class="fas fa-phone me-2"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+                        <div class="contact-item mb-3">
+                            <i class="fas fa-envelope me-2"></i>
+                            <span>support@kisanmitra.in</span>
+                        </div>
+                        <div class="contact-item mb-3">
+                            <i class="fas fa-clock me-2"></i>
+                            <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Media Links -->
+                    <div class="social-links mt-4">
+                        <h6 class="footer-heading mb-3">Follow Us</h6>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon" title="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-icon" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-icon" title="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-icon" title="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="social-icon" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-icon" title="WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Newsletter Subscription -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="newsletter-section">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 mb-3">
+                                <h6 class="footer-heading mb-2">Stay Updated</h6>
+                                <p class="newsletter-text mb-0">Get the latest farming tips, market updates, and agricultural news delivered to your inbox.</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <form class="newsletter-form">
+                                    <div class="input-group">
+                                        <input type="email" class="form-control newsletter-input" placeholder="Enter your email address" required>
+                                        <button class="btn btn-primary newsletter-btn" type="submit">
+                                            <i class="fas fa-paper-plane me-2"></i>Subscribe
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="bottom-footer">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <div class="copyright-text">
+                                    <p class="mb-0">&copy; 2025 Kisan Mitra. All rights reserved.</p>
+                                    <p class="mb-0">Built with <i class="fas fa-heart text-danger"></i> for Indian Farmers</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <div class="footer-bottom-links">
+                                    <a href="#" class="footer-bottom-link">Privacy Policy</a>
+                                    <a href="#" class="footer-bottom-link">Terms of Service</a>
+                                    <a href="#" class="footer-bottom-link">Cookie Policy</a>
+                                    <a href="#" class="footer-bottom-link">Sitemap</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

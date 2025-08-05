@@ -1,0 +1,565 @@
+{% extends "base.html" %}
+
+{% block title %}Resource Optimizer - Water & Fertilizer Management | Kisan Mitra{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12 text-center mb-5">
+            <h1 class="display-4 fw-bold text-success">
+                <i class="fas fa-tint me-3"></i>Resource Optimizer
+            </h1>
+            <p class="lead text-muted">Optimize water and fertilizer usage with smart calculators. Save costs and improve crop yield.</p>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs" id="resourceTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="irrigation-tab" data-bs-toggle="tab" data-bs-target="#irrigation" type="button" role="tab">
+                        <i class="fas fa-tint me-2"></i>Irrigation Calculator
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="fertilizer-tab" data-bs-toggle="tab" data-bs-target="#fertilizer" type="button" role="tab">
+                        <i class="fas fa-seedling me-2"></i>Fertilizer Guide
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="soil-health-tab" data-bs-toggle="tab" data-bs-target="#soil-health" type="button" role="tab">
+                        <i class="fas fa-microscope me-2"></i>Soil Health Analysis
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="soil-tab" data-bs-toggle="tab" data-bs-target="#soil" type="button" role="tab">
+                        <i class="fas fa-layer-group me-2"></i>Soil Health
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="resourceTabsContent">
+        <!-- Irrigation Calculator Tab -->
+        <div class="tab-pane fade show active" id="irrigation" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-8 mx-auto">
+                    <div class="form-container">
+                        <h3 class="text-center mb-4">
+                            <i class="fas fa-calculator me-2"></i>Smart Irrigation Calculator
+                        </h3>
+                        
+                        <form id="irrigationForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="irrigationCrop" class="form-label">
+                                        <i class="fas fa-seedling me-1"></i>Crop Type
+                                    </label>
+                                    <select class="form-select" id="irrigationCrop" name="crop" required>
+                                        <option value="">Select crop</option>
+                                        <option value="soybean">Soybean</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="wheat">Wheat</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                        <option value="vegetables">Vegetables</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="irrigationSoil" class="form-label">
+                                        <i class="fas fa-layer-group me-1"></i>Soil Type
+                                    </label>
+                                    <select class="form-select" id="irrigationSoil" name="soilType" required>
+                                        <option value="">Select soil type</option>
+                                        <option value="clay">Clay Soil</option>
+                                        <option value="loamy">Loamy Soil</option>
+                                        <option value="sandy">Sandy Soil</option>
+                                        <option value="black">Black Soil</option>
+                                        <option value="red">Red Soil</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="landAreaIrrigation" class="form-label">
+                                        <i class="fas fa-ruler-combined me-1"></i>Land Area (Acres)
+                                    </label>
+                                    <input type="number" class="form-control" id="landAreaIrrigation" name="landArea" 
+                                           placeholder="Enter land area" min="0.1" step="0.1" value="5" required>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="weatherCondition" class="form-label">
+                                        <i class="fas fa-cloud-sun me-1"></i>Weather Condition
+                                    </label>
+                                    <select class="form-select" id="weatherCondition" name="weather" required>
+                                        <option value="">Select weather</option>
+                                        <option value="sunny">Sunny</option>
+                                        <option value="cloudy">Cloudy</option>
+                                        <option value="rainy">Rainy</option>
+                                        <option value="hot">Hot & Dry</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="growthStage" class="form-label">
+                                        <i class="fas fa-chart-line me-1"></i>Growth Stage
+                                    </label>
+                                    <select class="form-select" id="growthStage" name="growthStage" required>
+                                        <option value="">Select growth stage</option>
+                                        <option value="seedling">Seedling</option>
+                                        <option value="vegetative">Vegetative</option>
+                                        <option value="flowering">Flowering</option>
+                                        <option value="fruiting">Fruiting</option>
+                                        <option value="maturity">Maturity</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="irrigationMethod" class="form-label">
+                                        <i class="fas fa-water me-1"></i>Irrigation Method
+                                    </label>
+                                    <select class="form-select" id="irrigationMethod" name="irrigationMethod" required>
+                                        <option value="">Select method</option>
+                                        <option value="drip">Drip Irrigation</option>
+                                        <option value="sprinkler">Sprinkler</option>
+                                        <option value="flood">Flood Irrigation</option>
+                                        <option value="furrow">Furrow Irrigation</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-calculator me-2"></i>Calculate Irrigation
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Irrigation Results -->
+                    <div id="irrigationResults" style="display: none;" class="results-container mt-4">
+                        <h4 class="text-center mb-4">
+                            <i class="fas fa-tint me-2"></i>Irrigation Recommendations
+                        </h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-tint fa-3x text-info mb-3"></i>
+                                        <h5>Water Required</h5>
+                                        <div class="fs-2 fw-bold text-info" id="waterRequired">25 L</div>
+                                        <small class="text-muted">per acre per day</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-clock fa-3x text-success mb-3"></i>
+                                        <h5>Irrigation Frequency</h5>
+                                        <div class="fs-2 fw-bold text-success" id="irrigationFrequency">Every 3 days</div>
+                                        <small class="text-muted">recommended interval</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-sun fa-3x text-warning mb-3"></i>
+                                        <h5>Best Time</h5>
+                                        <div class="fs-4 fw-bold text-warning" id="bestTime">Early Morning</div>
+                                        <small class="text-muted">for irrigation</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-lightbulb fa-3x text-primary mb-3"></i>
+                                        <h5>Tips</h5>
+                                        <div class="fs-6 text-primary" id="irrigationTips">Avoid peak sunlight</div>
+                                        <small class="text-muted">for better efficiency</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fertilizer Guide Tab -->
+        <div class="tab-pane fade" id="fertilizer" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-10 mx-auto">
+                    <div class="form-container">
+                        <h3 class="text-center mb-4">
+                            <i class="fas fa-seedling me-2"></i>Fertilizer Recommendation Guide
+                        </h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fertilizerCrop" class="form-label">Crop Type</label>
+                                <select class="form-select" id="fertilizerCrop">
+                                    <option value="">Select crop</option>
+                                    <option value="soybean">Soybean</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="rice">Rice</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="fertilizerStage" class="form-label">Growth Stage</label>
+                                <select class="form-select" id="fertilizerStage">
+                                    <option value="">Select stage</option>
+                                    <option value="basal">Basal Application</option>
+                                    <option value="topdress">Top Dressing</option>
+                                    <option value="foliar">Foliar Application</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button class="btn btn-success" id="getFertilizerGuide">
+                                <i class="fas fa-search me-2"></i>Get Fertilizer Guide
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fertilizer Results -->
+                    <div id="fertilizerResults" style="display: none;" class="results-container mt-4">
+                        <h4 class="text-center mb-4">
+                            <i class="fas fa-flask me-2"></i>Fertilizer Recommendations
+                        </h4>
+                        
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <h5 class="text-success">Nitrogen (N)</h5>
+                                        <div class="fs-3 fw-bold text-success" id="nitrogenAmount">50 kg</div>
+                                        <small class="text-muted">per acre</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <h5 class="text-warning">Phosphorus (P)</h5>
+                                        <div class="fs-3 fw-bold text-warning" id="phosphorusAmount">25 kg</div>
+                                        <small class="text-muted">per acre</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <h5 class="text-info">Potassium (K)</h5>
+                                        <div class="fs-3 fw-bold text-info" id="potassiumAmount">20 kg</div>
+                                        <small class="text-muted">per acre</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-info-circle me-2"></i>Application Guidelines</h6>
+                            <ul class="mb-0">
+                                <li>Apply fertilizers during early morning or evening</li>
+                                <li>Ensure soil is moist before application</li>
+                                <li>Mix fertilizers thoroughly with soil</li>
+                                <li>Follow recommended dosage strictly</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Soil Health Tab -->
+        <div class="tab-pane fade" id="soil" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-10 mx-auto">
+                    <div class="results-container">
+                        <h3 class="text-center mb-4">
+                            <i class="fas fa-layer-group me-2"></i>Soil Health Management
+                        </h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success">
+                                            <i class="fas fa-leaf me-2"></i>Organic Matter
+                                        </h5>
+                                        <p class="card-text">Maintain soil organic matter above 2% for better water retention and nutrient availability.</p>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-success" style="width: 75%">75%</div>
+                                        </div>
+                                        <small class="text-muted">Current level: Good</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-warning">
+                                            <i class="fas fa-tint me-2"></i>pH Level
+                                        </h5>
+                                        <p class="card-text">Optimal pH range for most crops is 6.0-7.5. Regular testing helps maintain soil health.</p>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-warning" style="width: 60%">6.5</div>
+                                        </div>
+                                        <small class="text-muted">Current pH: Optimal</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-success">
+                            <h6><i class="fas fa-check-circle me-2"></i>Soil Health Tips</h6>
+                            <ul class="mb-0">
+                                <li>Practice crop rotation to maintain soil fertility</li>
+                                <li>Use organic compost and green manure</li>
+                                <li>Avoid over-irrigation to prevent soil erosion</li>
+                                <li>Test soil regularly for nutrient levels</li>
+                                <li>Use cover crops to prevent soil erosion</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const irrigationForm = document.getElementById('irrigationForm');
+    const irrigationResults = document.getElementById('irrigationResults');
+    const getFertilizerGuide = document.getElementById('getFertilizerGuide');
+    const fertilizerResults = document.getElementById('fertilizerResults');
+    
+    // Irrigation form submission
+    irrigationForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!KisanMitra.validateForm(irrigationForm)) {
+            KisanMitra.showError('Please fill in all required fields');
+            return;
+        }
+        
+        const formData = new FormData(irrigationForm);
+        const data = {
+            crop: formData.get('crop'),
+            soil_type: formData.get('soilType'),
+            land_area: parseFloat(formData.get('landArea')),
+            weather: formData.get('weather'),
+            growth_stage: formData.get('growthStage'),
+            irrigation_method: formData.get('irrigationMethod')
+        };
+        
+        const submitBtn = irrigationForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        KisanMitra.showLoading(submitBtn);
+        
+        try {
+            const response = await KisanMitra.API.post('/api/irrigation-calculator', data);
+            displayIrrigationResults(response);
+            KisanMitra.showSuccess('Irrigation calculation completed!');
+        } catch (error) {
+            console.error('Error:', error);
+            KisanMitra.showError('Failed to calculate irrigation. Please try again.');
+        } finally {
+            KisanMitra.hideLoading(submitBtn, originalText);
+        }
+    });
+    
+    function displayIrrigationResults(data) {
+        document.getElementById('waterRequired').textContent = data.water_needed_liters + ' L';
+        document.getElementById('irrigationFrequency').textContent = data.frequency;
+        document.getElementById('bestTime').textContent = data.best_time;
+        document.getElementById('irrigationTips').textContent = data.tips;
+        
+        irrigationResults.style.display = 'block';
+        irrigationResults.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Fertilizer guide
+    getFertilizerGuide.addEventListener('click', async function() {
+        const crop = document.getElementById('fertilizerCrop').value;
+        const stage = document.getElementById('fertilizerStage').value;
+        
+        if (!crop || !stage) {
+            KisanMitra.showError('Please select both crop type and growth stage');
+            return;
+        }
+        
+        const originalText = getFertilizerGuide.innerHTML;
+        KisanMitra.showLoading(getFertilizerGuide);
+        
+        try {
+            // Get AI-powered fertilizer recommendation
+            const response = await KisanMitra.API.post('/api/fertilizer-recommendation', {
+                crop: crop,
+                soil_type: 'Black Soil',
+                growth_stage: stage,
+                land_area: 5
+            });
+            
+            // Update results with AI data
+            document.getElementById('nitrogenAmount').textContent = response.quantity_per_acre.nitrogen;
+            document.getElementById('phosphorusAmount').textContent = response.quantity_per_acre.phosphorus;
+            document.getElementById('potassiumAmount').textContent = response.quantity_per_acre.potassium;
+            
+            // Show additional AI insights
+            const guidelinesDiv = document.querySelector('.alert-info');
+            if (guidelinesDiv) {
+                guidelinesDiv.innerHTML = `
+                    <h6><i class="fas fa-info-circle me-2"></i>AI-Powered Guidelines</h6>
+                    <ul class="mb-0">
+                        <li><strong>Application Timing:</strong> ${response.application_timing}</li>
+                        <li><strong>Method:</strong> ${response.application_method}</li>
+                        <li><strong>Organic Options:</strong> ${response.organic_alternatives}</li>
+                        <li><strong>Cost:</strong> ${response.cost_analysis}</li>
+                        <li><strong>Soil Health:</strong> ${response.soil_health_tips}</li>
+                    </ul>
+                `;
+            }
+            
+            fertilizerResults.style.display = 'block';
+            fertilizerResults.scrollIntoView({ behavior: 'smooth' });
+            
+            if (response.ai_used) {
+                KisanMitra.showSuccess('🤖 AI-powered fertilizer recommendation generated!');
+            } else {
+                KisanMitra.showSuccess('Fertilizer guide generated successfully!');
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+            KisanMitra.showError('Failed to get fertilizer recommendation. Please try again.');
+        } finally {
+            KisanMitra.hideLoading(getFertilizerGuide, originalText);
+        }
+    });
+    
+    // Soil Health Analysis
+    const soilHealthForm = document.getElementById('soilHealthForm');
+    const soilHealthResults = document.getElementById('soilHealthResults');
+    
+    soilHealthForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!KisanMitra.validateForm(soilHealthForm)) {
+            KisanMitra.showError('Please fill in all required fields');
+            return;
+        }
+        
+        const formData = {
+            soil_type: document.getElementById('soilType').value,
+            ph_level: parseFloat(document.getElementById('phLevel').value),
+            organic_matter: parseFloat(document.getElementById('organicMatter').value),
+            nitrogen: parseInt(document.getElementById('nitrogen').value),
+            phosphorus: parseInt(document.getElementById('phosphorus').value),
+            potassium: parseInt(document.getElementById('potassium').value),
+            location: document.getElementById('soilLocation').value
+        };
+        
+        const submitBtn = soilHealthForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        KisanMitra.showLoading(submitBtn);
+        
+        try {
+            // Get AI-powered soil health analysis
+            const response = await KisanMitra.API.post('/api/soil-health-analysis', formData);
+            
+            // Update results
+            document.getElementById('healthScore').textContent = response.soil_health_score;
+            document.getElementById('healthStatus').textContent = response.health_status;
+            
+            // Update pH analysis
+            document.getElementById('phStatus').textContent = response.ph_analysis.current_status;
+            document.getElementById('phRecommendation').textContent = response.ph_analysis.recommendation;
+            
+            // Update nutrient status
+            const nitrogenStatus = document.getElementById('nitrogenStatus');
+            const phosphorusStatus = document.getElementById('phosphorusStatus');
+            const potassiumStatus = document.getElementById('potassiumStatus');
+            
+            nitrogenStatus.textContent = response.nutrient_analysis.nitrogen_status;
+            phosphorusStatus.textContent = response.nutrient_analysis.phosphorus_status;
+            potassiumStatus.textContent = response.nutrient_analysis.potassium_status;
+            
+            // Set badge colors based on status
+            setNutrientBadgeColor(nitrogenStatus, response.nutrient_analysis.nitrogen_status);
+            setNutrientBadgeColor(phosphorusStatus, response.nutrient_analysis.phosphorus_status);
+            setNutrientBadgeColor(potassiumStatus, response.nutrient_analysis.potassium_status);
+            
+            // Update suitable crops
+            const suitableCropsDiv = document.getElementById('suitableCrops');
+            suitableCropsDiv.innerHTML = response.suitable_crops.map(crop => 
+                `<li><i class="fas fa-check text-success me-2"></i>${crop}</li>`
+            ).join('');
+            
+            // Update soil amendments
+            const amendmentsDiv = document.getElementById('soilAmendments');
+            amendmentsDiv.innerHTML = response.soil_amendments.map(amendment => 
+                `<li><i class="fas fa-plus text-info me-2"></i>${amendment}</li>`
+            ).join('');
+            
+            // Update long-term plan
+            document.getElementById('longTermPlan').textContent = response.long_term_plan;
+            
+            soilHealthResults.style.display = 'block';
+            soilHealthResults.scrollIntoView({ behavior: 'smooth' });
+            
+            if (response.ai_used) {
+                KisanMitra.showSuccess('🤖 AI-powered soil health analysis completed!');
+            } else {
+                KisanMitra.showSuccess('Soil health analysis completed!');
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+            KisanMitra.showError('Failed to analyze soil health. Please try again.');
+        } finally {
+            KisanMitra.hideLoading(submitBtn, originalText);
+        }
+    });
+    
+    function setNutrientBadgeColor(element, status) {
+        element.className = 'badge';
+        if (status.toLowerCase().includes('deficient')) {
+            element.classList.add('bg-danger');
+        } else if (status.toLowerCase().includes('adequate') || status.toLowerCase().includes('good')) {
+            element.classList.add('bg-success');
+        } else if (status.toLowerCase().includes('excess')) {
+            element.classList.add('bg-warning');
+        } else {
+            element.classList.add('bg-secondary');
+        }
+    }
+});
+</script>
+{% endblock %} 

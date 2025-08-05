@@ -1,0 +1,492 @@
+{% extends "base.html" %}
+
+{% block title %}Mandi Connect - Marketplace | Kisan Mitra{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12 text-center mb-5">
+            <h1 class="display-4 fw-bold text-primary">
+                <i class="fas fa-store me-3"></i>Mandi Connect
+            </h1>
+            <p class="lead text-secondary">Direct marketplace connecting farmers with buyers. Eliminate middlemen and get better prices!</p>
+        </div>
+    </div>
+
+    <!-- Market Overview -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 bg-gradient-primary text-white">
+                <div class="card-body">
+                    <h4 class="mb-4"><i class="fas fa-chart-line me-2"></i>Today's Market Overview</h4>
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="fs-3 fw-bold">₹5,200</div>
+                            <small>Soybean (per quintal)</small>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="fs-3 fw-bold">₹7,500</div>
+                            <small>Cotton (per quintal)</small>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="fs-3 fw-bold">₹9,000</div>
+                            <small>Moong (per quintal)</small>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <small>Last updated: <span class="current-date"></span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs" id="marketTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="sell-tab" data-bs-toggle="tab" data-bs-target="#sell" type="button" role="tab">
+                        <i class="fas fa-plus-circle me-2"></i>Sell Your Produce
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="buy-tab" data-bs-toggle="tab" data-bs-target="#buy" type="button" role="tab">
+                        <i class="fas fa-search me-2"></i>Find Produce
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="prices-tab" data-bs-toggle="tab" data-bs-target="#prices" type="button" role="tab">
+                        <i class="fas fa-chart-bar me-2"></i>Market Prices
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="marketTabsContent">
+        <!-- Sell Tab -->
+        <div class="tab-pane fade show active" id="sell" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-8 mx-auto">
+                    <div class="form-container">
+                        <h3 class="text-center mb-4">
+                            <i class="fas fa-plus-circle me-2"></i>List Your Produce
+                        </h3>
+                        
+                        <form id="sellForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="cropType" class="form-label">
+                                        <i class="fas fa-seedling me-1"></i>Crop Type
+                                    </label>
+                                    <select class="form-select" id="cropType" name="cropType" required>
+                                        <option value="">Select crop</option>
+                                        <option value="soybean">Soybean</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="moong">Moong (Green Gram)</option>
+                                        <option value="wheat">Wheat</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="quantity" class="form-label">
+                                        <i class="fas fa-weight me-1"></i>Quantity (Quintal)
+                                    </label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" 
+                                           placeholder="Enter quantity" min="1" step="0.1" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="price" class="form-label">
+                                        <i class="fas fa-rupee-sign me-1"></i>Expected Price (₹ per quintal)
+                                    </label>
+                                    <input type="number" class="form-control" id="price" name="price" 
+                                           placeholder="Enter expected price" min="1" required>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="harvestDate" class="form-label">
+                                        <i class="fas fa-calendar me-1"></i>Expected Harvest Date
+                                    </label>
+                                    <input type="date" class="form-control" id="harvestDate" name="harvestDate" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label">
+                                    <i class="fas fa-info-circle me-1"></i>Description
+                                </label>
+                                <textarea class="form-control" id="description" name="description" rows="3" 
+                                          placeholder="Describe your produce quality, organic status, etc."></textarea>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-upload me-2"></i>List Produce
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buy Tab -->
+        <div class="tab-pane fade" id="buy" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-8 mx-auto">
+                    <div class="form-container">
+                        <h3 class="text-center mb-4">
+                            <i class="fas fa-search me-2"></i>Find Produce
+                        </h3>
+                        
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="searchCrop" class="form-label">Crop Type</label>
+                                <select class="form-select" id="searchCrop">
+                                    <option value="">All crops</option>
+                                    <option value="soybean">Soybean</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="moong">Moong</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="rice">Rice</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label for="searchLocation" class="form-label">Location</label>
+                                <select class="form-select" id="searchLocation">
+                                    <option value="">All locations</option>
+                                    <option value="nashik">Nashik</option>
+                                    <option value="pune">Pune</option>
+                                    <option value="aurangabad">Aurangabad</option>
+                                    <option value="mumbai">Mumbai</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label for="searchPrice" class="form-label">Max Price (₹)</label>
+                                <input type="number" class="form-control" id="searchPrice" placeholder="Enter max price">
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" id="searchBtn">
+                                <i class="fas fa-search me-2"></i>Search
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Results -->
+                    <div class="results-container mt-4" style="display: none;">
+                        <h4>Available Produce</h4>
+                        <div class="row" id="searchResults">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prices Tab -->
+        <div class="tab-pane fade" id="prices" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-10 mx-auto">
+                    <div class="form-container">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="mb-0">
+                                <i class="fas fa-chart-bar me-2"></i>Live Market Prices
+                            </h3>
+                            <button class="btn btn-primary" id="refreshPricesBtn">
+                                <i class="fas fa-sync-alt me-2"></i>Refresh Prices
+                            </button>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-0">
+                                    <div class="card-header">
+                                        <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Nashik Mandi</h5>
+                                    </div>
+                                    <div class="card-body" id="nashikPrices">
+                                        <div class="price-item">
+                                            <span><strong>Soybean</strong></span>
+                                            <span class="fs-5">₹5,200</span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span><strong>Cotton</strong></span>
+                                            <span class="fs-5">₹7,500</span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span><strong>Moong</strong></span>
+                                            <span class="fs-5">₹9,000</span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span><strong>Wheat</strong></span>
+                                            <span class="fs-5">₹2,200</span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span><strong>Rice</strong></span>
+                                            <span class="fs-5">₹1,800</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card border-0">
+                                    <div class="card-header">
+                                        <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Pune Mandi</h5>
+                                    </div>
+                                    <div class="card-body" id="punePrices">
+                                        <div class="price-item">
+                                            <span><strong>Soybean</strong></span>
+                                            <span class="fs-5">₹5,300</span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span><strong>Cotton</strong></span>
+                                            <span class="fs-5">₹7,600</span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span><strong>Moong</strong></span>
+                                            <span class="fs-5">₹9,100</span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span><strong>Wheat</strong></span>
+                                            <span class="fs-5">₹2,250</span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span><strong>Rice</strong></span>
+                                            <span class="fs-5">₹1,850</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- AI Market Analysis Section -->
+                        <div class="mt-4" id="aiAnalysisSection" style="display: none;">
+                            <!-- AI analysis will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fallback Data for when API fails -->
+<script>
+// Fallback market data when API is not available
+const FALLBACK_MARKET_DATA = {
+    location: 'Nashik',
+    current_prices: {
+        'soybean': 5200,
+        'cotton': 7500,
+        'moong': 9000,
+        'wheat': 2200,
+        'rice': 1800
+    },
+    market_trend: 'Prices are stable with slight upward trend',
+    price_forecast: 'Expected 5-10% increase in next 30 days',
+    demand_analysis: 'High demand for pulses and oilseeds',
+    ai_used: false,
+    ai_note: 'Using fallback data - API not available'
+};
+
+// Fallback data for different locations
+const FALLBACK_LOCATIONS = {
+    'nashik': {
+        'soybean': 5200,
+        'cotton': 7500,
+        'moong': 9000,
+        'wheat': 2200,
+        'rice': 1800
+    },
+    'pune': {
+        'soybean': 5300,
+        'cotton': 7600,
+        'moong': 9100,
+        'wheat': 2250,
+        'rice': 1850
+    },
+    'aurangabad': {
+        'soybean': 5100,
+        'cotton': 7400,
+        'moong': 8900,
+        'wheat': 2150,
+        'rice': 1750
+    },
+    'mumbai': {
+        'soybean': 5400,
+        'cotton': 7700,
+        'moong': 9200,
+        'wheat': 2300,
+        'rice': 1900
+    }
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sellForm = document.getElementById('sellForm');
+    const searchBtn = document.getElementById('searchBtn');
+    const refreshPricesBtn = document.getElementById('refreshPricesBtn');
+    
+    // Handle sell form submission
+    sellForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(sellForm);
+        const data = {
+            cropType: formData.get('cropType'),
+            quantity: formData.get('quantity'),
+            price: formData.get('price'),
+            harvestDate: formData.get('harvestDate'),
+            description: formData.get('description')
+        };
+        
+        // Show loading
+        const submitBtn = sellForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        KisanMitra.showLoading(submitBtn);
+        
+        try {
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            KisanMitra.showSuccess('Your produce has been listed successfully! Buyers can now contact you.');
+            sellForm.reset();
+        } catch (error) {
+            console.error('Error:', error);
+            KisanMitra.showError('Failed to list produce. Please try again.');
+        } finally {
+            KisanMitra.hideLoading(submitBtn, originalText);
+        }
+    });
+    
+    // Handle search
+    searchBtn.addEventListener('click', function() {
+        const crop = document.getElementById('searchCrop').value;
+        const location = document.getElementById('searchLocation').value;
+        const price = document.getElementById('searchPrice').value;
+        
+        // Simulate search
+        KisanMitra.showSuccess(`Searching for ${crop || 'all crops'} in ${location || 'all locations'}`);
+        
+        // In a real app, you would make an API call here
+        setTimeout(() => {
+            // Update search results
+            console.log('Search completed');
+        }, 1000);
+    });
+    
+    // Handle price refresh with fallback
+    refreshPricesBtn.addEventListener('click', async function() {
+        const originalText = refreshPricesBtn.innerHTML;
+        KisanMitra.showLoading(refreshPricesBtn);
+        
+        try {
+            // Try to get AI-powered market analysis
+            const response = await KisanMitra.API.get('/api/market-prices', { location: 'Nashik' });
+            
+            // Update prices with AI data
+            updatePricesDisplay(response);
+            
+            // Show AI status if AI was used
+            if (response.ai_used) {
+                KisanMitra.showSuccess('🤖 AI-powered market analysis updated successfully!');
+                showAIAnalysis(response);
+            } else {
+                KisanMitra.showSuccess('Market prices updated successfully!');
+            }
+            
+        } catch (error) {
+            console.error('API Error:', error);
+            
+            // Use fallback data when API fails
+            KisanMitra.showWarning('⚠️ Using fallback data - API not available');
+            updatePricesDisplay(FALLBACK_MARKET_DATA);
+            
+            // Show fallback analysis
+            showFallbackAnalysis();
+        } finally {
+            KisanMitra.hideLoading(refreshPricesBtn, originalText);
+        }
+    });
+    
+    // Function to update prices display
+    function updatePricesDisplay(data) {
+        const nashikPrices = document.getElementById('nashikPrices');
+        const punePrices = document.getElementById('punePrices');
+        
+        // Update Nashik prices
+        nashikPrices.innerHTML = '';
+        Object.entries(data.current_prices).forEach(([crop, price]) => {
+            nashikPrices.innerHTML += `
+                <div class="price-item">
+                    <span><strong>${crop.charAt(0).toUpperCase() + crop.slice(1)}</strong></span>
+                    <span class="fs-5">₹${price}</span>
+                </div>
+            `;
+        });
+        
+        // Update Pune prices with slight variation
+        punePrices.innerHTML = '';
+        Object.entries(data.current_prices).forEach(([crop, price]) => {
+            const punePrice = Math.round(price * (1 + (Math.random() * 0.1 - 0.05))); // ±5% variation
+            punePrices.innerHTML += `
+                <div class="price-item">
+                    <span><strong>${crop.charAt(0).toUpperCase() + crop.slice(1)}</strong></span>
+                    <span class="fs-5">₹${punePrice}</span>
+                </div>
+            `;
+        });
+    }
+    
+    // Function to show AI analysis
+    function showAIAnalysis(response) {
+        const aiSection = document.getElementById('aiAnalysisSection');
+        aiSection.style.display = 'block';
+        
+        aiSection.innerHTML = `
+            <div class="alert alert-info">
+                <h6><i class="fas fa-robot me-2"></i>AI Market Analysis</h6>
+                <p><strong>Trend:</strong> ${response.market_trend}</p>
+                <p><strong>Forecast:</strong> ${response.price_forecast}</p>
+                <p><strong>Demand:</strong> ${response.demand_analysis}</p>
+                ${response.ai_note ? `<small class="text-muted"><i class="fas fa-info-circle me-1"></i>${response.ai_note}</small>` : ''}
+            </div>
+        `;
+    }
+    
+    // Function to show fallback analysis
+    function showFallbackAnalysis() {
+        const aiSection = document.getElementById('aiAnalysisSection');
+        aiSection.style.display = 'block';
+        
+        aiSection.innerHTML = `
+            <div class="alert alert-warning">
+                <h6><i class="fas fa-exclamation-triangle me-2"></i>Fallback Market Analysis</h6>
+                <p><strong>Trend:</strong> ${FALLBACK_MARKET_DATA.market_trend}</p>
+                <p><strong>Forecast:</strong> ${FALLBACK_MARKET_DATA.price_forecast}</p>
+                <p><strong>Demand:</strong> ${FALLBACK_MARKET_DATA.demand_analysis}</p>
+                <small class="text-muted"><i class="fas fa-info-circle me-1"></i>${FALLBACK_MARKET_DATA.ai_note}</small>
+            </div>
+        `;
+    }
+    
+    // Set default harvest date to 30 days from now
+    const harvestDateInput = document.getElementById('harvestDate');
+    const defaultDate = new Date();
+    defaultDate.setDate(defaultDate.getDate() + 30);
+    harvestDateInput.value = defaultDate.toISOString().split('T')[0];
+});
+</script>
+{% endblock %} 

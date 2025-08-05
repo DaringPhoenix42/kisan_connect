@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+
+{% block title %}Paudha Rakshak - Plant Disease Detection | Kisan Mitra{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12 text-center mb-5">
+            <h1 class="display-4 fw-bold text-success">
+                <i class="fas fa-shield-alt me-3"></i>Paudha Rakshak
+            </h1>
+            <p class="lead text-muted">AI-powered plant disease detection. Upload photos and get instant diagnosis with treatment solutions.</p>
+        </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="form-container">
+                <h3 class="text-center mb-4">
+                    <i class="fas fa-camera me-2"></i>Upload Plant Image
+                </h3>
+                
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt fa-4x text-success mb-3"></i>
+                    <h4>Drag & Drop or Click to Upload</h4>
+                    <p class="text-muted">Upload a clear image of the affected plant part (leaf, stem, fruit, etc.)</p>
+                    <p class="text-muted">Supported formats: JPEG, PNG, GIF (Max 5MB)</p>
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    <button class="btn btn-outline-success mt-3" onclick="document.getElementById('imageInput').click()">
+                        <i class="fas fa-upload me-2"></i>Choose File
+                    </button>
+                </div>
+                
+                <!-- Image Preview -->
+                <div id="imagePreview" style="display: none;" class="text-center mt-4">
+                    <img id="previewImg" src="" alt="Preview" class="img-fluid rounded" style="max-height: 300px;">
+                    <div class="mt-3">
+                        <button class="btn btn-primary" id="analyzeBtn">
+                            <i class="fas fa-search me-2"></i>Analyze Image
+                        </button>
+                        <button class="btn btn-outline-secondary ms-2" id="resetBtn">
+                            <i class="fas fa-redo me-2"></i>Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analysis Results -->
+    <div id="analysisResults" style="display: none;">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="results-container">
+                    <h3 class="text-center mb-4">
+                        <i class="fas fa-microscope me-2"></i>Disease Analysis Results
+                    </h3>
+                    
+                    <div class="disease-result">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h4 id="diseaseName">Yellow Mosaic Virus</h4>
+                                <p class="mb-2"><strong>Crop:</strong> <span id="cropType">Soybean</span></p>
+                                <p class="mb-2"><strong>Confidence:</strong> <span id="confidence">92%</span></p>
+                                <p class="mb-0"><strong>Severity:</strong> <span id="severity">Moderate</span></p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="progress mb-2" style="height: 20px;">
+                                    <div class="progress-bar bg-success" id="confidenceBar" 
+                                         style="width: 92%" role="progressbar">92%</div>
+                                </div>
+                                <small class="text-white">Detection Confidence</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Treatment Solutions -->
+                    <div class="mt-4">
+                        <h4><i class="fas fa-medkit me-2"></i>Treatment Solutions</h4>
+                        
+                        <div class="solution-card">
+                            <h5 class="text-success">
+                                <i class="fas fa-leaf me-2"></i>Organic Solution
+                            </h5>
+                            <p id="organicSolution">Spray neem oil solution (2ml per liter of water) every 7-10 days. Apply early morning or evening to avoid leaf burn.</p>
+                        </div>
+                        
+                        <div class="solution-card">
+                            <h5 class="text-warning">
+                                <i class="fas fa-flask me-2"></i>Chemical Solution
+                            </h5>
+                            <p id="chemicalSolution">Use Thiamethoxam-based pesticide as per recommended dosage. Follow safety guidelines and wear protective equipment.</p>
+                        </div>
+                        
+                        <div class="solution-card">
+                            <h5 class="text-info">
+                                <i class="fas fa-shield-alt me-2"></i>Preventive Measures
+                            </h5>
+                            <p id="preventiveMeasures">Remove and burn affected plants to stop the spread. Maintain field hygiene and use disease-resistant varieties.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information -->
+                    <div class="mt-4">
+                        <h4><i class="fas fa-info-circle me-2"></i>Additional Information</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-success">
+                                            <i class="fas fa-clock me-2"></i>Treatment Duration
+                                        </h6>
+                                        <p class="card-text">2-3 weeks of regular application</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-warning">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>Precautions
+                                        </h6>
+                                        <p class="card-text">Avoid spraying during peak sunlight hours</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Diseases Guide -->
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <h3 class="text-center mb-4">
+                <i class="fas fa-book me-2"></i>Common Plant Diseases Guide
+            </h3>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">
+                        <i class="fas fa-bug me-2"></i>Yellow Mosaic Virus
+                    </h5>
+                    <p class="card-text">
+                        <strong>Affects:</strong> Soybean, Cotton<br>
+                        <strong>Symptoms:</strong> Yellow patches on leaves, stunted growth<br>
+                        <strong>Treatment:</strong> Remove infected plants, use resistant varieties
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">
+                        <i class="fas fa-bug me-2"></i>Pink Bollworm
+                    </h5>
+                    <p class="card-text">
+                        <strong>Affects:</strong> Cotton<br>
+                        <strong>Symptoms:</strong> Damaged bolls, reduced yield<br>
+                        <strong>Treatment:</strong> Pheromone traps, biological control
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">
+                        <i class="fas fa-bug me-2"></i>Powdery Mildew
+                    </h5>
+                    <p class="card-text">
+                        <strong>Affects:</strong> Multiple crops<br>
+                        <strong>Symptoms:</strong> White powdery spots on leaves<br>
+                        <strong>Treatment:</strong> Fungicides, proper spacing
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="row mt-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="alert alert-info">
+                <h5><i class="fas fa-lightbulb me-2"></i>Tips for Better Detection</h5>
+                <ul class="mb-0">
+                    <li>Take photos in good lighting conditions</li>
+                    <li>Include both healthy and affected parts for comparison</li>
+                    <li>Capture close-up shots of the affected area</li>
+                    <li>Take multiple photos from different angles</li>
+                    <li>Ensure the image is clear and not blurry</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const analysisResults = document.getElementById('analysisResults');
+    
+    // Drag and drop functionality
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFile(files[0]);
+        }
+    });
+    
+    // Click to upload
+    uploadArea.addEventListener('click', function() {
+        imageInput.click();
+    });
+    
+    imageInput.addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+            handleFile(e.target.files[0]);
+        }
+    });
+    
+    function handleFile(file) {
+        if (!KisanMitra.handleFileUpload(imageInput, previewImg)) {
+            return;
+        }
+        
+        imagePreview.style.display = 'block';
+        uploadArea.style.display = 'none';
+    }
+    
+    // Analyze button
+    analyzeBtn.addEventListener('click', async function() {
+        const originalText = analyzeBtn.innerHTML;
+        KisanMitra.showLoading(analyzeBtn);
+        
+        try {
+            const formData = new FormData();
+            formData.append('image', imageInput.files[0]);
+            
+            const response = await KisanMitra.API.uploadFile('/api/disease-detection', formData);
+            displayResults(response);
+            KisanMitra.showSuccess('Disease analysis completed successfully!');
+        } catch (error) {
+            console.error('Error:', error);
+            KisanMitra.showError('Failed to analyze image. Please try again.');
+        } finally {
+            KisanMitra.hideLoading(analyzeBtn, originalText);
+        }
+    });
+    
+    // Reset button
+    resetBtn.addEventListener('click', function() {
+        imageInput.value = '';
+        imagePreview.style.display = 'none';
+        uploadArea.style.display = 'block';
+        analysisResults.style.display = 'none';
+    });
+    
+    function displayResults(data) {
+        // Update disease information
+        document.getElementById('diseaseName').textContent = data.disease;
+        document.getElementById('cropType').textContent = data.crop;
+        document.getElementById('confidence').textContent = data.confidence + '%';
+        document.getElementById('severity').textContent = data.severity;
+        
+        // Update confidence bar
+        const confidenceBar = document.getElementById('confidenceBar');
+        confidenceBar.style.width = data.confidence + '%';
+        confidenceBar.textContent = data.confidence + '%';
+        
+        // Update solutions
+        document.getElementById('organicSolution').textContent = data.solutions.organic;
+        document.getElementById('chemicalSolution').textContent = data.solutions.chemical;
+        document.getElementById('preventiveMeasures').textContent = data.solutions.preventive;
+        
+        // Show results
+        analysisResults.style.display = 'block';
+        analysisResults.scrollIntoView({ behavior: 'smooth' });
+    }
+});
+</script>
+{% endblock %} 

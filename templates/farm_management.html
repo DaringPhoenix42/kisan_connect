@@ -1,0 +1,2066 @@
+{% extends "base.html" %}
+
+{% block title %}Farm Management - Kisan Mitra{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h1 class="display-6 mb-2 text-primary">
+                        <i class="fas fa-tractor me-3"></i>
+                        Farm Management System
+                    </h1>
+                    <p class="text-secondary">Comprehensive farm management and monitoring platform</p>
+                </div>
+                <div class="text-end mt-2 mt-md-0">
+                    <div class="ai-badge fs-6 px-3 py-2">
+                        <i class="fas fa-robot me-2"></i>AI-Powered
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Farm Overview Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-primary mb-2">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h5 class="card-title text-primary">Total Land</h5>
+                    <h3 class="text-primary mb-0">25 Acres</h3>
+                    <small class="text-muted">5 Fields</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-success mb-2">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h5 class="card-title text-success">Active Crops</h5>
+                    <h3 class="text-success mb-0">3</h3>
+                    <small class="text-muted">Soybean, Cotton, Moong</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-warning mb-2">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h5 class="card-title text-warning">Workers</h5>
+                    <h3 class="text-warning mb-0">8</h3>
+                    <small class="text-muted">2 Available Today</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-0 h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-info mb-2">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <h5 class="card-title text-info">Monthly Profit</h5>
+                    <h3 class="text-info mb-0">₹45,000</h3>
+                    <small class="text-muted">+12% from last month</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Tabs -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0">
+                <div class="card-header border-0">
+                    <ul class="nav nav-tabs card-header-tabs flex-wrap" id="farmTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab">
+                                <i class="fas fa-chart-line me-2"></i>Dashboard
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="land-tab" data-bs-toggle="tab" data-bs-target="#land" type="button" role="tab">
+                                <i class="fas fa-map me-2"></i>Land Management
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="labor-tab" data-bs-toggle="tab" data-bs-target="#labor" type="button" role="tab">
+                                <i class="fas fa-users me-2"></i>Labor Management
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="task-tab" data-bs-toggle="tab" data-bs-target="#task" type="button" role="tab">
+                                <i class="fas fa-tasks me-2"></i>Task Management
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="financial-tab" data-bs-toggle="tab" data-bs-target="#financial" type="button" role="tab">
+                                <i class="fas fa-rupee-sign me-2"></i>Financial Management
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="inventory-tab" data-bs-toggle="tab" data-bs-target="#inventory" type="button" role="tab">
+                                <i class="fas fa-boxes me-2"></i>Inventory Management
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="farmTabContent">
+                        <!-- Dashboard Tab -->
+                        <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-8 mb-4">
+                                    <h5 class="mb-3">Farm Performance Overview</h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card border-0 bg-gradient-primary text-white">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">Crop Health</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h3 class="mb-0">85%</h3>
+                                                            <small>Overall Health</small>
+                                                        </div>
+                                                        <div class="display-4">
+                                                            <i class="fas fa-leaf"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card border-0 bg-gradient-success text-white">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">Water Efficiency</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h3 class="mb-0">92%</h3>
+                                                            <small>Efficiency Rate</small>
+                                                        </div>
+                                                        <div class="display-4">
+                                                            <i class="fas fa-tint"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card border-0">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Recent Activities</h6>
+                                            <div class="list-group list-group-flush">
+                                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <i class="fas fa-seedling text-success me-2"></i>
+                                                        <strong>Soybean</strong> - Fertilizer applied
+                                                    </div>
+                                                    <small class="text-muted">2 hours ago</small>
+                                                </div>
+                                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <i class="fas fa-tint text-info me-2"></i>
+                                                        <strong>Field 2</strong> - Irrigation completed
+                                                    </div>
+                                                    <small class="text-muted">4 hours ago</small>
+                                                </div>
+                                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <i class="fas fa-users text-warning me-2"></i>
+                                                        <strong>Worker Team</strong> - Pest monitoring
+                                                    </div>
+                                                    <small class="text-muted">6 hours ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h5 class="mb-3">Weather & Alerts</h5>
+                                    <div class="card border-0 bg-gradient-info text-white mb-3">
+                                        <div class="card-body">
+                                            <h6 class="card-title">
+                                                <i class="fas fa-cloud-sun me-2"></i>Today's Weather
+                                            </h6>
+                                            <h3 class="mb-0">28°C</h3>
+                                            <small>Partly Cloudy</small>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-warning">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        <strong>Weather Alert:</strong> Light rain expected tomorrow. Plan irrigation accordingly.
+                                    </div>
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Market Update:</strong> Soybean prices increased by 5% this week.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Land Management Tab -->
+                        <div class="tab-pane fade" id="land" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-8 mb-4">
+                                    <h5 class="mb-3">Field Management</h5>
+                                    
+                                    <!-- Visual Field Layout -->
+                                    <div class="card border-0 mb-4">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-map-marked-alt me-2"></i>Visual Field Layout</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="field-layout">
+                                                <div class="field-grid">
+                                                    <div class="field-item" data-field="field1">
+                                                        <div class="field-header">
+                                                            <h6 class="mb-1">Field 1</h6>
+                                                            <small class="text-muted">8 Acres</small>
+                                                        </div>
+                                                        <div class="field-content">
+                                                            <div class="crop-info">
+                                                                <i class="fas fa-seedling text-success"></i>
+                                                                <span>Soybean</span>
+                                                            </div>
+                                                            <div class="field-status">
+                                                                <span class="badge bg-success">Growing</span>
+                                                            </div>
+                                                            <div class="field-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-success" style="width: 65%"></div>
+                                                                </div>
+                                                                <small class="text-muted">65% Complete</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="field-item" data-field="field2">
+                                                        <div class="field-header">
+                                                            <h6 class="mb-1">Field 2</h6>
+                                                            <small class="text-muted">10 Acres</small>
+                                                        </div>
+                                                        <div class="field-content">
+                                                            <div class="crop-info">
+                                                                <i class="fas fa-seedling text-warning"></i>
+                                                                <span>Cotton</span>
+                                                            </div>
+                                                            <div class="field-status">
+                                                                <span class="badge bg-success">Growing</span>
+                                                            </div>
+                                                            <div class="field-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-warning" style="width: 45%"></div>
+                                                                </div>
+                                                                <small class="text-muted">45% Complete</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="field-item" data-field="field3">
+                                                        <div class="field-header">
+                                                            <h6 class="mb-1">Field 3</h6>
+                                                            <small class="text-muted">7 Acres</small>
+                                                        </div>
+                                                        <div class="field-content">
+                                                            <div class="crop-info">
+                                                                <i class="fas fa-seedling text-info"></i>
+                                                                <span>Moong</span>
+                                                            </div>
+                                                            <div class="field-status">
+                                                                <span class="badge bg-success">Growing</span>
+                                                            </div>
+                                                            <div class="field-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-info" style="width: 80%"></div>
+                                                                </div>
+                                                                <small class="text-muted">80% Complete</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="field-item empty-field" data-field="field4">
+                                                        <div class="field-header">
+                                                            <h6 class="mb-1">Field 4</h6>
+                                                            <small class="text-muted">5 Acres</small>
+                                                        </div>
+                                                        <div class="field-content">
+                                                            <div class="crop-info">
+                                                                <i class="fas fa-plus text-muted"></i>
+                                                                <span>Add Crop</span>
+                                                            </div>
+                                                            <div class="field-status">
+                                                                <span class="badge bg-secondary">Fallow</span>
+                                                            </div>
+                                                            <div class="field-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-secondary" style="width: 0%"></div>
+                                                                </div>
+                                                                <small class="text-muted">Ready for planting</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Field Details Table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Field Name</th>
+                                                    <th>Area (Acres)</th>
+                                                    <th>Current Crop</th>
+                                                    <th>Planting Date</th>
+                                                    <th>Expected Harvest</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Field 1</strong></td>
+                                                    <td>8</td>
+                                                    <td>Soybean</td>
+                                                    <td>15 Jul 2025</td>
+                                                    <td>15 Oct 2025</td>
+                                                    <td><span class="badge bg-success">Growing</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Field 2</strong></td>
+                                                    <td>10</td>
+                                                    <td>Cotton</td>
+                                                    <td>1 Jul 2025</td>
+                                                    <td>1 Dec 2025</td>
+                                                    <td><span class="badge bg-success">Growing</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Field 3</strong></td>
+                                                    <td>7</td>
+                                                    <td>Moong</td>
+                                                    <td>20 Jul 2025</td>
+                                                    <td>20 Sep 2025</td>
+                                                    <td><span class="badge bg-success">Growing</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h5 class="mb-3">Add New Field</h5>
+                                    <div class="card border-0">
+                                        <div class="card-body">
+                                            <form id="addFieldForm">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Field Name</label>
+                                                    <input type="text" class="form-control" placeholder="e.g., Field 4">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Area (Acres)</label>
+                                                    <input type="number" class="form-control" placeholder="5">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Soil Type</label>
+                                                    <select class="form-select">
+                                                        <option>Black Soil</option>
+                                                        <option>Red Soil</option>
+                                                        <option>Clay Soil</option>
+                                                        <option>Loamy Soil</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Irrigation Type</label>
+                                                    <select class="form-select">
+                                                        <option>Drip Irrigation</option>
+                                                        <option>Sprinkler</option>
+                                                        <option>Flood Irrigation</option>
+                                                        <option>Rain-fed</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    <i class="fas fa-plus me-2"></i>Add Field
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Labor Management Tab -->
+                        <div class="tab-pane fade" id="labor" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-8 mb-4">
+                                    <h5 class="mb-3">Worker Management</h5>
+                                    
+                                    <!-- Visual Worker Layout -->
+                                    <div class="card border-0 mb-4">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-users me-2"></i>Worker Overview</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="worker-layout">
+                                                <div class="worker-grid">
+                                                    <div class="worker-item" data-worker="worker1">
+                                                        <div class="worker-header">
+                                                            <div class="worker-avatar">
+                                                                <i class="fas fa-user"></i>
+                                                            </div>
+                                                            <div class="worker-info">
+                                                                <h6 class="mb-1">Ramesh Kumar</h6>
+                                                                <small class="text-muted">₹300/day</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="worker-content">
+                                                            <div class="worker-status">
+                                                                <span class="badge bg-primary">Working</span>
+                                                            </div>
+                                                            <div class="worker-task">
+                                                                <i class="fas fa-tint text-info me-2"></i>
+                                                                <span>Irrigation - Field 1</span>
+                                                            </div>
+                                                            <div class="worker-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-primary" style="width: 75%"></div>
+                                                                </div>
+                                                                <small class="text-muted">75% Complete</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="worker-item" data-worker="worker2">
+                                                        <div class="worker-header">
+                                                            <div class="worker-avatar">
+                                                                <i class="fas fa-user"></i>
+                                                            </div>
+                                                            <div class="worker-info">
+                                                                <h6 class="mb-1">Lakshmi Devi</h6>
+                                                                <small class="text-muted">₹250/day</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="worker-content">
+                                                            <div class="worker-status">
+                                                                <span class="badge bg-primary">Working</span>
+                                                            </div>
+                                                            <div class="worker-task">
+                                                                <i class="fas fa-seedling text-success me-2"></i>
+                                                                <span>Weeding - Field 2</span>
+                                                            </div>
+                                                            <div class="worker-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-success" style="width: 60%"></div>
+                                                                </div>
+                                                                <small class="text-muted">60% Complete</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="worker-item" data-worker="worker3">
+                                                        <div class="worker-header">
+                                                            <div class="worker-avatar">
+                                                                <i class="fas fa-user"></i>
+                                                            </div>
+                                                            <div class="worker-info">
+                                                                <h6 class="mb-1">Mohan Singh</h6>
+                                                                <small class="text-muted">₹350/day</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="worker-content">
+                                                            <div class="worker-status">
+                                                                <span class="badge bg-secondary">Available</span>
+                                                            </div>
+                                                            <div class="worker-task">
+                                                                <i class="fas fa-tools text-warning me-2"></i>
+                                                                <span>Equipment Maintenance</span>
+                                                            </div>
+                                                            <div class="worker-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-secondary" style="width: 0%"></div>
+                                                                </div>
+                                                                <small class="text-muted">Ready for assignment</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="worker-item empty-worker" data-worker="worker4">
+                                                        <div class="worker-header">
+                                                            <div class="worker-avatar">
+                                                                <i class="fas fa-plus"></i>
+                                                            </div>
+                                                            <div class="worker-info">
+                                                                <h6 class="mb-1">Add Worker</h6>
+                                                                <small class="text-muted">New hire</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="worker-content">
+                                                            <div class="worker-status">
+                                                                <span class="badge bg-secondary">Hiring</span>
+                                                            </div>
+                                                            <div class="worker-task">
+                                                                <i class="fas fa-user-plus text-muted me-2"></i>
+                                                                <span>Click to add worker</span>
+                                                            </div>
+                                                            <div class="worker-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-secondary" style="width: 0%"></div>
+                                                                </div>
+                                                                <small class="text-muted">No tasks assigned</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Worker Details Table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Worker Name</th>
+                                                    <th>Contact</th>
+                                                    <th>Daily Wage</th>
+                                                    <th>Current Task</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Ramesh Kumar</strong></td>
+                                                    <td>+91 98765 43210</td>
+                                                    <td>₹300</td>
+                                                    <td>Irrigation - Field 1</td>
+                                                    <td><span class="badge bg-primary">Working</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-success">View Details</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Lakshmi Devi</strong></td>
+                                                    <td>+91 98765 43211</td>
+                                                    <td>₹250</td>
+                                                    <td>Weeding - Field 2</td>
+                                                    <td><span class="badge bg-primary">Working</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-success">View Details</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Mohan Singh</strong></td>
+                                                    <td>+91 98765 43212</td>
+                                                    <td>₹350</td>
+                                                    <td>Equipment Maintenance</td>
+                                                    <td><span class="badge bg-secondary">Available</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-success">View Details</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h5 class="mb-3">Add New Worker</h5>
+                                    <div class="card border-0">
+                                        <div class="card-body">
+                                            <form id="addWorkerForm">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Full Name</label>
+                                                    <input type="text" class="form-control" placeholder="Worker Name">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Phone Number</label>
+                                                    <input type="tel" class="form-control" placeholder="+91 98765 43210">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Daily Wage (₹)</label>
+                                                    <input type="number" class="form-control" placeholder="300">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Skills</label>
+                                                    <select class="form-select" multiple>
+                                                        <option>Irrigation</option>
+                                                        <option>Weeding</option>
+                                                        <option>Harvesting</option>
+                                                        <option>Equipment Operation</option>
+                                                        <option>Pest Management</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    <i class="fas fa-user-plus me-2"></i>Add Worker
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Task Management Tab -->
+                        <div class="tab-pane fade" id="task" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-8 mb-4">
+                                    <h5 class="mb-3">Task Management</h5>
+                                    
+                                    <!-- Task Overview Cards -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card border-0 bg-primary text-white">
+                                                <div class="card-body text-center">
+                                                    <h3>5</h3>
+                                                    <p class="mb-0">Pending Tasks</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card border-0 bg-warning text-white">
+                                                <div class="card-body text-center">
+                                                    <h3>2</h3>
+                                                    <p class="mb-0">In Progress</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="card border-0 bg-success text-white">
+                                                <div class="card-body text-center">
+                                                    <h3>12</h3>
+                                                    <p class="mb-0">Completed Today</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Visual Task Layout -->
+                                    <div class="card border-0 mb-4">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-tasks me-2"></i>Task Board</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="task-board">
+                                                <div class="task-columns">
+                                                    <!-- Pending Tasks -->
+                                                    <div class="task-column">
+                                                        <h6 class="task-column-header">
+                                                            <i class="fas fa-clock text-warning me-2"></i>
+                                                            Pending (5)
+                                                        </h6>
+                                                        <div class="task-list">
+                                                            <div class="task-item" data-task="task1">
+                                                                <div class="task-header">
+                                                                    <span class="badge bg-danger">High</span>
+                                                                    <small class="text-muted">Today</small>
+                                                                </div>
+                                                                <h6 class="task-title">Fertilizer Application</h6>
+                                                                <p class="task-description">Apply NPK fertilizer to Field 2</p>
+                                                                <div class="task-meta">
+                                                                    <span><i class="fas fa-map-marker-alt me-1"></i>Field 2</span>
+                                                                    <span><i class="fas fa-user me-1"></i>Lakshmi Devi</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="task-item" data-task="task2">
+                                                                <div class="task-header">
+                                                                    <span class="badge bg-warning">Medium</span>
+                                                                    <small class="text-muted">Tomorrow</small>
+                                                                </div>
+                                                                <h6 class="task-title">Pest Monitoring</h6>
+                                                                <p class="task-description">Check for pest activity in Field 3</p>
+                                                                <div class="task-meta">
+                                                                    <span><i class="fas fa-map-marker-alt me-1"></i>Field 3</span>
+                                                                    <span><i class="fas fa-user me-1"></i>Mohan Singh</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- In Progress Tasks -->
+                                                    <div class="task-column">
+                                                        <h6 class="task-column-header">
+                                                            <i class="fas fa-play text-primary me-2"></i>
+                                                            In Progress (2)
+                                                        </h6>
+                                                        <div class="task-list">
+                                                            <div class="task-item active" data-task="task3">
+                                                                <div class="task-header">
+                                                                    <span class="badge bg-danger">High</span>
+                                                                    <small class="text-muted">Today</small>
+                                                                </div>
+                                                                <h6 class="task-title">Irrigation</h6>
+                                                                <p class="task-description">Complete irrigation for Field 1</p>
+                                                                <div class="task-meta">
+                                                                    <span><i class="fas fa-map-marker-alt me-1"></i>Field 1</span>
+                                                                    <span><i class="fas fa-user me-1"></i>Ramesh Kumar</span>
+                                                                </div>
+                                                                <div class="task-progress">
+                                                                    <div class="progress" style="height: 4px;">
+                                                                        <div class="progress-bar bg-primary" style="width: 75%"></div>
+                                                                    </div>
+                                                                    <small class="text-muted">75% Complete</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Completed Tasks -->
+                                                    <div class="task-column">
+                                                        <h6 class="task-column-header">
+                                                            <i class="fas fa-check text-success me-2"></i>
+                                                            Completed (12)
+                                                        </h6>
+                                                        <div class="task-list">
+                                                            <div class="task-item completed" data-task="task4">
+                                                                <div class="task-header">
+                                                                    <span class="badge bg-success">Completed</span>
+                                                                    <small class="text-muted">2 hours ago</small>
+                                                                </div>
+                                                                <h6 class="task-title">Soil Preparation</h6>
+                                                                <p class="task-description">Prepare soil for new crop</p>
+                                                                <div class="task-meta">
+                                                                    <span><i class="fas fa-map-marker-alt me-1"></i>Field 4</span>
+                                                                    <span><i class="fas fa-user me-1"></i>Ramesh Kumar</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Task Details Table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Task</th>
+                                                    <th>Field</th>
+                                                    <th>Assigned To</th>
+                                                    <th>Due Date</th>
+                                                    <th>Priority</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Irrigation</strong></td>
+                                                    <td>Field 1</td>
+                                                    <td>Ramesh Kumar</td>
+                                                    <td>Today</td>
+                                                    <td><span class="badge bg-danger">High</span></td>
+                                                    <td><span class="badge bg-primary">In Progress</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-success">Complete</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Fertilizer Application</strong></td>
+                                                    <td>Field 2</td>
+                                                    <td>Lakshmi Devi</td>
+                                                    <td>Tomorrow</td>
+                                                    <td><span class="badge bg-warning">Medium</span></td>
+                                                    <td><span class="badge bg-secondary">Pending</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">Start</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Pest Monitoring</strong></td>
+                                                    <td>Field 3</td>
+                                                    <td>Mohan Singh</td>
+                                                    <td>Tomorrow</td>
+                                                    <td><span class="badge bg-warning">Medium</span></td>
+                                                    <td><span class="badge bg-secondary">Pending</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">Start</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h5 class="mb-3">Create New Task</h5>
+                                    <div class="card border-0">
+                                        <div class="card-body">
+                                            <form id="addTaskForm">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Task Name</label>
+                                                    <input type="text" class="form-control" placeholder="e.g., Irrigation">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Field</label>
+                                                    <select class="form-select">
+                                                        <option>Field 1</option>
+                                                        <option>Field 2</option>
+                                                        <option>Field 3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Assign To</label>
+                                                    <select class="form-select">
+                                                        <option>Ramesh Kumar</option>
+                                                        <option>Lakshmi Devi</option>
+                                                        <option>Mohan Singh</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Due Date</label>
+                                                    <input type="date" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Priority</label>
+                                                    <select class="form-select">
+                                                        <option>Low</option>
+                                                        <option>Medium</option>
+                                                        <option>High</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    <i class="fas fa-plus me-2"></i>Create Task
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financial Management Tab -->
+                        <div class="tab-pane fade" id="financial" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-8 mb-4">
+                                    <h5 class="mb-3">Financial Overview</h5>
+                                    
+                                    <!-- Financial Summary Cards -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-success text-white">
+                                                <div class="card-body text-center">
+                                                    <h4>₹2,50,000</h4>
+                                                    <p class="mb-0">Total Income</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-danger text-white">
+                                                <div class="card-body text-center">
+                                                    <h4>₹1,80,000</h4>
+                                                    <p class="mb-0">Total Expenses</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-info text-white">
+                                                <div class="card-body text-center">
+                                                    <h4>₹70,000</h4>
+                                                    <p class="mb-0">Net Profit</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Financial Charts -->
+                                    <div class="card border-0 mb-4">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Financial Analysis</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="financial-overview">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h6 class="mb-3">Income Breakdown</h6>
+                                                        <div class="income-chart">
+                                                            <div class="chart-item">
+                                                                <div class="chart-bar bg-success" style="height: 60px;"></div>
+                                                                <div class="chart-label">
+                                                                    <strong>Crop Sales</strong>
+                                                                    <small class="text-muted">₹1,80,000 (72%)</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="chart-item">
+                                                                <div class="chart-bar bg-info" style="height: 40px;"></div>
+                                                                <div class="chart-label">
+                                                                    <strong>Subsidies</strong>
+                                                                    <small class="text-muted">₹45,000 (18%)</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="chart-item">
+                                                                <div class="chart-bar bg-warning" style="height: 25px;"></div>
+                                                                <div class="chart-label">
+                                                                    <strong>Other Income</strong>
+                                                                    <small class="text-muted">₹25,000 (10%)</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6 class="mb-3">Expense Breakdown</h6>
+                                                        <div class="expense-chart">
+                                                            <div class="chart-item">
+                                                                <div class="chart-bar bg-danger" style="height: 50px;"></div>
+                                                                <div class="chart-label">
+                                                                    <strong>Inputs</strong>
+                                                                    <small class="text-muted">₹85,000 (47%)</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="chart-item">
+                                                                <div class="chart-bar bg-warning" style="height: 35px;"></div>
+                                                                <div class="chart-label">
+                                                                    <strong>Labor</strong>
+                                                                    <small class="text-muted">₹60,000 (33%)</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="chart-item">
+                                                                <div class="chart-bar bg-secondary" style="height: 20px;"></div>
+                                                                <div class="chart-label">
+                                                                    <strong>Equipment</strong>
+                                                                    <small class="text-muted">₹35,000 (20%)</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Recent Transactions -->
+                                    <div class="card border-0 mb-4">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>Recent Transactions</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="transaction-list">
+                                                <div class="transaction-item income">
+                                                    <div class="transaction-icon">
+                                                        <i class="fas fa-arrow-up text-success"></i>
+                                                    </div>
+                                                    <div class="transaction-details">
+                                                        <h6 class="mb-1">Soybean Sale</h6>
+                                                        <small class="text-muted">Crop Sales • 04 Aug 2025</small>
+                                                    </div>
+                                                    <div class="transaction-amount text-success">
+                                                        +₹45,000
+                                                    </div>
+                                                </div>
+                                                <div class="transaction-item expense">
+                                                    <div class="transaction-icon">
+                                                        <i class="fas fa-arrow-down text-danger"></i>
+                                                    </div>
+                                                    <div class="transaction-details">
+                                                        <h6 class="mb-1">Fertilizer Purchase</h6>
+                                                        <small class="text-muted">Inputs • 03 Aug 2025</small>
+                                                    </div>
+                                                    <div class="transaction-amount text-danger">
+                                                        -₹12,000
+                                                    </div>
+                                                </div>
+                                                <div class="transaction-item expense">
+                                                    <div class="transaction-icon">
+                                                        <i class="fas fa-arrow-down text-danger"></i>
+                                                    </div>
+                                                    <div class="transaction-details">
+                                                        <h6 class="mb-1">Labor Payment</h6>
+                                                        <small class="text-muted">Labor • 02 Aug 2025</small>
+                                                    </div>
+                                                    <div class="transaction-amount text-danger">
+                                                        -₹8,000
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Transaction Table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Description</th>
+                                                    <th>Category</th>
+                                                    <th>Amount</th>
+                                                    <th>Type</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>04 Aug 2025</td>
+                                                    <td>Soybean Sale</td>
+                                                    <td>Crop Sales</td>
+                                                    <td class="text-success">+₹45,000</td>
+                                                    <td><span class="badge bg-success">Income</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>03 Aug 2025</td>
+                                                    <td>Fertilizer Purchase</td>
+                                                    <td>Inputs</td>
+                                                    <td class="text-danger">-₹12,000</td>
+                                                    <td><span class="badge bg-danger">Expense</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>02 Aug 2025</td>
+                                                    <td>Labor Payment</td>
+                                                    <td>Labor</td>
+                                                    <td class="text-danger">-₹8,000</td>
+                                                    <td><span class="badge bg-danger">Expense</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h5 class="mb-3">Add Transaction</h5>
+                                    <div class="card border-0">
+                                        <div class="card-body">
+                                            <form id="addTransactionForm">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Description</label>
+                                                    <input type="text" class="form-control" placeholder="Transaction description">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Category</label>
+                                                    <select class="form-select">
+                                                        <option>Crop Sales</option>
+                                                        <option>Inputs</option>
+                                                        <option>Labor</option>
+                                                        <option>Equipment</option>
+                                                        <option>Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Amount (₹)</label>
+                                                    <input type="number" class="form-control" placeholder="1000">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Type</label>
+                                                    <select class="form-select">
+                                                        <option>Income</option>
+                                                        <option>Expense</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Date</label>
+                                                    <input type="date" class="form-control">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    <i class="fas fa-plus me-2"></i>Add Transaction
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inventory Management Tab -->
+                        <div class="tab-pane fade" id="inventory" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-8 mb-4">
+                                    <h5 class="mb-3">Inventory Management</h5>
+                                    
+                                    <!-- Inventory Overview Cards -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-3 mb-3">
+                                            <div class="card border-0 bg-success text-white">
+                                                <div class="card-body text-center">
+                                                    <h4>8</h4>
+                                                    <p class="mb-0">In Stock</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="card border-0 bg-warning text-white">
+                                                <div class="card-body text-center">
+                                                    <h4>3</h4>
+                                                    <p class="mb-0">Low Stock</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="card border-0 bg-danger text-white">
+                                                <div class="card-body text-center">
+                                                    <h4>2</h4>
+                                                    <p class="mb-0">Out of Stock</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <div class="card border-0 bg-info text-white">
+                                                <div class="card-body text-center">
+                                                    <h4>₹85K</h4>
+                                                    <p class="mb-0">Total Value</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Visual Inventory Layout -->
+                                    <div class="card border-0 mb-4">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0"><i class="fas fa-boxes me-2"></i>Inventory Overview</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="inventory-layout">
+                                                <div class="inventory-grid">
+                                                    <div class="inventory-item" data-item="item1">
+                                                        <div class="inventory-header">
+                                                            <div class="inventory-icon">
+                                                                <i class="fas fa-seedling text-success"></i>
+                                                            </div>
+                                                            <div class="inventory-info">
+                                                                <h6 class="mb-1">Urea Fertilizer</h6>
+                                                                <small class="text-muted">Fertilizers</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inventory-content">
+                                                            <div class="stock-info">
+                                                                <span class="stock-quantity">500 kg</span>
+                                                                <span class="badge bg-success">In Stock</span>
+                                                            </div>
+                                                            <div class="stock-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-success" style="width: 85%"></div>
+                                                                </div>
+                                                                <small class="text-muted">85% remaining</small>
+                                                            </div>
+                                                            <div class="inventory-meta">
+                                                                <small class="text-muted">Last updated: Today</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="inventory-item" data-item="item2">
+                                                        <div class="inventory-header">
+                                                            <div class="inventory-icon">
+                                                                <i class="fas fa-seedling text-warning"></i>
+                                                            </div>
+                                                            <div class="inventory-info">
+                                                                <h6 class="mb-1">DAP Fertilizer</h6>
+                                                                <small class="text-muted">Fertilizers</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inventory-content">
+                                                            <div class="stock-info">
+                                                                <span class="stock-quantity">200 kg</span>
+                                                                <span class="badge bg-warning">Low Stock</span>
+                                                            </div>
+                                                            <div class="stock-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-warning" style="width: 25%"></div>
+                                                                </div>
+                                                                <small class="text-muted">25% remaining</small>
+                                                            </div>
+                                                            <div class="inventory-meta">
+                                                                <small class="text-muted">Last updated: Yesterday</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="inventory-item" data-item="item3">
+                                                        <div class="inventory-header">
+                                                            <div class="inventory-icon">
+                                                                <i class="fas fa-bug text-info"></i>
+                                                            </div>
+                                                            <div class="inventory-info">
+                                                                <h6 class="mb-1">Pesticide</h6>
+                                                                <small class="text-muted">Pesticides</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inventory-content">
+                                                            <div class="stock-info">
+                                                                <span class="stock-quantity">50 liters</span>
+                                                                <span class="badge bg-success">In Stock</span>
+                                                            </div>
+                                                            <div class="stock-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-info" style="width: 65%"></div>
+                                                                </div>
+                                                                <small class="text-muted">65% remaining</small>
+                                                            </div>
+                                                            <div class="inventory-meta">
+                                                                <small class="text-muted">Last updated: 2 days ago</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="inventory-item" data-item="item4">
+                                                        <div class="inventory-header">
+                                                            <div class="inventory-icon">
+                                                                <i class="fas fa-seedling text-danger"></i>
+                                                            </div>
+                                                            <div class="inventory-info">
+                                                                <h6 class="mb-1">Soybean Seeds</h6>
+                                                                <small class="text-muted">Seeds</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inventory-content">
+                                                            <div class="stock-info">
+                                                                <span class="stock-quantity">0 kg</span>
+                                                                <span class="badge bg-danger">Out of Stock</span>
+                                                            </div>
+                                                            <div class="stock-progress">
+                                                                <div class="progress" style="height: 4px;">
+                                                                    <div class="progress-bar bg-danger" style="width: 0%"></div>
+                                                                </div>
+                                                                <small class="text-muted">0% remaining</small>
+                                                            </div>
+                                                            <div class="inventory-meta">
+                                                                <small class="text-muted">Last updated: 1 week ago</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Inventory Table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Category</th>
+                                                    <th>Current Stock</th>
+                                                    <th>Unit</th>
+                                                    <th>Last Updated</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Urea Fertilizer</strong></td>
+                                                    <td>Fertilizers</td>
+                                                    <td>500</td>
+                                                    <td>kg</td>
+                                                    <td>Today</td>
+                                                    <td><span class="badge bg-success">In Stock</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">Update</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>DAP Fertilizer</strong></td>
+                                                    <td>Fertilizers</td>
+                                                    <td>200</td>
+                                                    <td>kg</td>
+                                                    <td>Yesterday</td>
+                                                    <td><span class="badge bg-warning">Low Stock</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">Update</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Pesticide</strong></td>
+                                                    <td>Pesticides</td>
+                                                    <td>50</td>
+                                                    <td>liters</td>
+                                                    <td>2 days ago</td>
+                                                    <td><span class="badge bg-success">In Stock</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">Update</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Soybean Seeds</strong></td>
+                                                    <td>Seeds</td>
+                                                    <td>0</td>
+                                                    <td>kg</td>
+                                                    <td>1 week ago</td>
+                                                    <td><span class="badge bg-danger">Out of Stock</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">Update</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h5 class="mb-3">Add Inventory Item</h5>
+                                    <div class="card border-0">
+                                        <div class="card-body">
+                                            <form id="addInventoryForm">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Item Name</label>
+                                                    <input type="text" class="form-control" placeholder="e.g., Urea Fertilizer">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Category</label>
+                                                    <select class="form-select">
+                                                        <option>Fertilizers</option>
+                                                        <option>Pesticides</option>
+                                                        <option>Seeds</option>
+                                                        <option>Equipment</option>
+                                                        <option>Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Current Stock</label>
+                                                    <input type="number" class="form-control" placeholder="100">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Unit</label>
+                                                    <select class="form-select">
+                                                        <option>kg</option>
+                                                        <option>liters</option>
+                                                        <option>pieces</option>
+                                                        <option>bags</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Alert Threshold</label>
+                                                    <input type="number" class="form-control" placeholder="20">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    <i class="fas fa-plus me-2"></i>Add Item
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI-Powered Farm Analytics Modal -->
+<div class="modal fade" id="farmAnalyticsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-robot text-success me-2"></i>
+                    AI-Powered Farm Analytics
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="analyticsContent">
+                    <!-- AI analytics content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize farm management functionality
+    initializeFarmManagement();
+});
+
+function initializeFarmManagement() {
+    // Add form submission handlers
+    document.getElementById('addFieldForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        KisanMitra.showSuccess('Field added successfully!');
+        // Add field logic here
+    });
+
+    document.getElementById('addWorkerForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        KisanMitra.showSuccess('Worker added successfully!');
+        // Add worker logic here
+    });
+
+    document.getElementById('addTaskForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        KisanMitra.showSuccess('Task created successfully!');
+        // Add task logic here
+    });
+
+    document.getElementById('addTransactionForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        KisanMitra.showSuccess('Transaction added successfully!');
+        // Add transaction logic here
+    });
+
+    document.getElementById('addInventoryForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        KisanMitra.showSuccess('Inventory item added successfully!');
+        // Add inventory logic here
+    });
+
+    // Add AI analytics button functionality
+    const aiAnalyticsBtn = document.createElement('button');
+    aiAnalyticsBtn.className = 'btn btn-success position-fixed d-none d-md-block';
+    aiAnalyticsBtn.style.cssText = 'bottom: 20px; right: 20px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);';
+    aiAnalyticsBtn.innerHTML = '<i class="fas fa-robot me-2"></i>AI Analytics';
+    aiAnalyticsBtn.onclick = function() {
+        showAIAnalytics();
+    };
+    document.body.appendChild(aiAnalyticsBtn);
+    
+    // Add mobile-friendly AI button in header
+    const mobileAiBtn = document.createElement('button');
+    mobileAiBtn.className = 'btn btn-success btn-sm d-md-none w-100 mb-3';
+    mobileAiBtn.innerHTML = '<i class="fas fa-robot me-2"></i>AI Analytics';
+    mobileAiBtn.onclick = function() {
+        showAIAnalytics();
+    };
+    
+    // Insert mobile AI button after the header
+    const header = document.querySelector('.container-fluid .row:first-child');
+    if (header) {
+        const mobileAiContainer = document.createElement('div');
+        mobileAiContainer.className = 'col-12';
+        mobileAiContainer.appendChild(mobileAiBtn);
+        header.appendChild(mobileAiContainer);
+    }
+    
+    // Add field item click handlers
+    const fieldItems = document.querySelectorAll('.field-item');
+    fieldItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const fieldId = this.getAttribute('data-field');
+            showFieldDetails(fieldId);
+        });
+    });
+    
+    // Add worker item click handlers
+    const workerItems = document.querySelectorAll('.worker-item');
+    workerItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const workerId = this.getAttribute('data-worker');
+            showWorkerDetails(workerId);
+        });
+    });
+    
+    // Add task item click handlers
+    const taskItems = document.querySelectorAll('.task-item');
+    taskItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const taskId = this.getAttribute('data-task');
+            showTaskDetails(taskId);
+        });
+    });
+    
+    // Add inventory item click handlers
+    const inventoryItems = document.querySelectorAll('.inventory-item');
+    inventoryItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const itemId = this.getAttribute('data-item');
+            showInventoryDetails(itemId);
+        });
+    });
+}
+
+function showAIAnalytics() {
+    const modal = new bootstrap.Modal(document.getElementById('farmAnalyticsModal'));
+    const content = document.getElementById('analyticsContent');
+    
+    content.innerHTML = `
+        <div class="text-center">
+            <div class="spinner-border text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Analyzing farm data with AI...</p>
+        </div>
+    `;
+    
+    modal.show();
+    
+    // Simulate AI analysis
+    setTimeout(() => {
+        content.innerHTML = `
+            <div class="alert alert-success">
+                <i class="fas fa-robot me-2"></i>
+                <strong>AI-Powered Farm Analysis Complete!</strong>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>📊 Performance Insights</h6>
+                    <ul class="list-unstyled">
+                        <li>✅ Soybean yield expected to increase by 15%</li>
+                        <li>⚠️ Cotton field needs pest monitoring</li>
+                        <li>💡 Consider crop rotation for Field 2</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>🎯 Recommendations</h6>
+                    <ul class="list-unstyled">
+                        <li>🌱 Apply organic fertilizer to improve soil health</li>
+                        <li>💧 Optimize irrigation schedule for water conservation</li>
+                        <li>👥 Increase labor allocation for harvesting</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-3">
+                <h6>📈 Financial Projections</h6>
+                <p>Based on current trends, expected profit for this season: <strong>₹85,000</strong></p>
+            </div>
+                 `;
+     }, 2000);
+ }
+ 
+ function showFieldDetails(fieldId) {
+     const fieldData = {
+         field1: {
+             name: 'Field 1',
+             area: '8 Acres',
+             crop: 'Soybean',
+             plantingDate: '15 Jul 2025',
+             harvestDate: '15 Oct 2025',
+             status: 'Growing',
+             progress: 65,
+             soilType: 'Black Soil',
+             irrigation: 'Drip Irrigation',
+             lastActivity: 'Fertilizer applied - 2 hours ago',
+             nextActivity: 'Irrigation scheduled - Tomorrow'
+         },
+         field2: {
+             name: 'Field 2',
+             area: '10 Acres',
+             crop: 'Cotton',
+             plantingDate: '1 Jul 2025',
+             harvestDate: '1 Dec 2025',
+             status: 'Growing',
+             progress: 45,
+             soilType: 'Red Soil',
+             irrigation: 'Sprinkler',
+             lastActivity: 'Pest monitoring - 4 hours ago',
+             nextActivity: 'Fertilizer application - Tomorrow'
+         },
+         field3: {
+             name: 'Field 3',
+             area: '7 Acres',
+             crop: 'Moong',
+             plantingDate: '20 Jul 2025',
+             harvestDate: '20 Sep 2025',
+             status: 'Growing',
+             progress: 80,
+             soilType: 'Loamy Soil',
+             irrigation: 'Rain-fed',
+             lastActivity: 'Weeding completed - 6 hours ago',
+             nextActivity: 'Harvest preparation - Next week'
+         },
+         field4: {
+             name: 'Field 4',
+             area: '5 Acres',
+             crop: 'Not planted',
+             plantingDate: 'Not set',
+             harvestDate: 'Not set',
+             status: 'Fallow',
+             progress: 0,
+             soilType: 'Black Soil',
+             irrigation: 'Drip Irrigation',
+             lastActivity: 'Soil preparation - 1 week ago',
+             nextActivity: 'Ready for planting'
+         }
+     };
+     
+     const field = fieldData[fieldId];
+     if (!field) return;
+     
+     const modal = new bootstrap.Modal(document.getElementById('farmAnalyticsModal'));
+     const content = document.getElementById('analyticsContent');
+     
+     content.innerHTML = `
+         <div class="alert alert-info">
+             <i class="fas fa-map-marked-alt me-2"></i>
+             <strong>${field.name} Details</strong>
+         </div>
+         <div class="row">
+             <div class="col-md-6">
+                 <h6>📊 Field Information</h6>
+                 <ul class="list-unstyled">
+                     <li><strong>Area:</strong> ${field.area}</li>
+                     <li><strong>Current Crop:</strong> ${field.crop}</li>
+                     <li><strong>Planting Date:</strong> ${field.plantingDate}</li>
+                     <li><strong>Expected Harvest:</strong> ${field.harvestDate}</li>
+                     <li><strong>Soil Type:</strong> ${field.soilType}</li>
+                     <li><strong>Irrigation:</strong> ${field.irrigation}</li>
+                 </ul>
+             </div>
+             <div class="col-md-6">
+                 <h6>📈 Progress & Status</h6>
+                 <div class="mb-3">
+                     <div class="d-flex justify-content-between">
+                         <span>Growth Progress</span>
+                         <span>${field.progress}%</span>
+                     </div>
+                     <div class="progress">
+                         <div class="progress-bar bg-success" style="width: ${field.progress}%"></div>
+                     </div>
+                 </div>
+                 <ul class="list-unstyled">
+                     <li><strong>Status:</strong> <span class="badge bg-success">${field.status}</span></li>
+                     <li><strong>Last Activity:</strong> ${field.lastActivity}</li>
+                     <li><strong>Next Activity:</strong> ${field.nextActivity}</li>
+                 </ul>
+             </div>
+         </div>
+         <div class="mt-3">
+             <h6>🎯 AI Recommendations</h6>
+             <div class="alert alert-success">
+                 <i class="fas fa-robot me-2"></i>
+                 <strong>AI Analysis:</strong> Based on current conditions, ${field.name} is performing well. 
+                 ${field.progress > 50 ? 'Consider additional fertilization for optimal yield.' : 'Monitor soil moisture levels closely.'}
+             </div>
+         </div>
+     `;
+     
+           modal.show();
+  }
+  
+  function showWorkerDetails(workerId) {
+      const workerData = {
+          worker1: {
+              name: 'Ramesh Kumar',
+              phone: '+91 98765 43210',
+              wage: '₹300/day',
+              status: 'Working',
+              currentTask: 'Irrigation - Field 1',
+              progress: 75,
+              skills: ['Irrigation', 'Equipment Operation', 'Harvesting'],
+              experience: '5 years',
+              lastActivity: 'Started irrigation at 8:00 AM',
+              nextActivity: 'Complete irrigation by 4:00 PM'
+          },
+          worker2: {
+              name: 'Lakshmi Devi',
+              phone: '+91 98765 43211',
+              wage: '₹250/day',
+              status: 'Working',
+              currentTask: 'Weeding - Field 2',
+              progress: 60,
+              skills: ['Weeding', 'Pest Management', 'Harvesting'],
+              experience: '3 years',
+              lastActivity: 'Started weeding at 7:30 AM',
+              nextActivity: 'Complete weeding by 3:30 PM'
+          },
+          worker3: {
+              name: 'Mohan Singh',
+              phone: '+91 98765 43212',
+              wage: '₹350/day',
+              status: 'Available',
+              currentTask: 'Equipment Maintenance',
+              progress: 0,
+              skills: ['Equipment Operation', 'Maintenance', 'Irrigation'],
+              experience: '8 years',
+              lastActivity: 'Completed tractor maintenance',
+              nextActivity: 'Ready for new assignment'
+          }
+      };
+      
+      const worker = workerData[workerId];
+      if (!worker) return;
+      
+      const modal = new bootstrap.Modal(document.getElementById('farmAnalyticsModal'));
+      const content = document.getElementById('analyticsContent');
+      
+      content.innerHTML = `
+          <div class="alert alert-info">
+              <i class="fas fa-user me-2"></i>
+              <strong>${worker.name} Details</strong>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <h6>📋 Worker Information</h6>
+                  <ul class="list-unstyled">
+                      <li><strong>Phone:</strong> ${worker.phone}</li>
+                      <li><strong>Daily Wage:</strong> ${worker.wage}</li>
+                      <li><strong>Experience:</strong> ${worker.experience}</li>
+                      <li><strong>Status:</strong> <span class="badge bg-primary">${worker.status}</span></li>
+                      <li><strong>Current Task:</strong> ${worker.currentTask}</li>
+                  </ul>
+                  <h6 class="mt-3">🛠️ Skills</h6>
+                  <div class="mb-2">
+                      ${worker.skills.map(skill => `<span class="badge bg-secondary me-1">${skill}</span>`).join('')}
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <h6>📈 Task Progress</h6>
+                  <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                          <span>Current Task Progress</span>
+                          <span>${worker.progress}%</span>
+                      </div>
+                      <div class="progress">
+                          <div class="progress-bar bg-primary" style="width: ${worker.progress}%"></div>
+                      </div>
+                  </div>
+                  <ul class="list-unstyled">
+                      <li><strong>Last Activity:</strong> ${worker.lastActivity}</li>
+                      <li><strong>Next Activity:</strong> ${worker.nextActivity}</li>
+                  </ul>
+              </div>
+          </div>
+          <div class="mt-3">
+              <h6>🎯 AI Recommendations</h6>
+              <div class="alert alert-success">
+                  <i class="fas fa-robot me-2"></i>
+                  <strong>AI Analysis:</strong> ${worker.name} is performing well. 
+                  ${worker.progress > 50 ? 'Consider assigning additional tasks for optimal productivity.' : 'Monitor task progress and provide support if needed.'}
+              </div>
+          </div>
+      `;
+      
+      modal.show();
+  }
+  
+  function showTaskDetails(taskId) {
+      const taskData = {
+          task1: {
+              name: 'Fertilizer Application',
+              description: 'Apply NPK fertilizer to Field 2',
+              field: 'Field 2',
+              assignedTo: 'Lakshmi Devi',
+              dueDate: 'Today',
+              priority: 'High',
+              status: 'Pending',
+              progress: 0,
+              estimatedTime: '4 hours',
+              materials: ['NPK Fertilizer', 'Sprayer', 'Protective Gear']
+          },
+          task2: {
+              name: 'Pest Monitoring',
+              description: 'Check for pest activity in Field 3',
+              field: 'Field 3',
+              assignedTo: 'Mohan Singh',
+              dueDate: 'Tomorrow',
+              priority: 'Medium',
+              status: 'Pending',
+              progress: 0,
+              estimatedTime: '2 hours',
+              materials: ['Magnifying Glass', 'Pest Guide', 'Notebook']
+          },
+          task3: {
+              name: 'Irrigation',
+              description: 'Complete irrigation for Field 1',
+              field: 'Field 1',
+              assignedTo: 'Ramesh Kumar',
+              dueDate: 'Today',
+              priority: 'High',
+              status: 'In Progress',
+              progress: 75,
+              estimatedTime: '6 hours',
+              materials: ['Water Pump', 'Pipes', 'Timer']
+          }
+      };
+      
+      const task = taskData[taskId];
+      if (!task) return;
+      
+      const modal = new bootstrap.Modal(document.getElementById('farmAnalyticsModal'));
+      const content = document.getElementById('analyticsContent');
+      
+      content.innerHTML = `
+          <div class="alert alert-info">
+              <i class="fas fa-tasks me-2"></i>
+              <strong>${task.name} Details</strong>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <h6>📋 Task Information</h6>
+                  <ul class="list-unstyled">
+                      <li><strong>Description:</strong> ${task.description}</li>
+                      <li><strong>Field:</strong> ${task.field}</li>
+                      <li><strong>Assigned To:</strong> ${task.assignedTo}</li>
+                      <li><strong>Due Date:</strong> ${task.dueDate}</li>
+                      <li><strong>Priority:</strong> <span class="badge bg-danger">${task.priority}</span></li>
+                      <li><strong>Status:</strong> <span class="badge bg-primary">${task.status}</span></li>
+                      <li><strong>Estimated Time:</strong> ${task.estimatedTime}</li>
+                  </ul>
+                  <h6 class="mt-3">📦 Required Materials</h6>
+                  <div class="mb-2">
+                      ${task.materials.map(material => `<span class="badge bg-secondary me-1">${material}</span>`).join('')}
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <h6>📈 Task Progress</h6>
+                  <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                          <span>Completion Progress</span>
+                          <span>${task.progress}%</span>
+                      </div>
+                      <div class="progress">
+                          <div class="progress-bar bg-success" style="width: ${task.progress}%"></div>
+                      </div>
+                  </div>
+                  <h6>⏰ Timeline</h6>
+                  <ul class="list-unstyled">
+                      <li><strong>Start Time:</strong> 8:00 AM</li>
+                      <li><strong>Expected End:</strong> 4:00 PM</li>
+                      <li><strong>Time Remaining:</strong> ${task.progress > 0 ? '2 hours' : 'Full day'}</li>
+                  </ul>
+              </div>
+          </div>
+          <div class="mt-3">
+              <h6>🎯 AI Recommendations</h6>
+              <div class="alert alert-success">
+                  <i class="fas fa-robot me-2"></i>
+                  <strong>AI Analysis:</strong> This task is ${task.progress > 0 ? 'progressing well' : 'ready to start'}. 
+                  ${task.progress > 50 ? 'Consider completing related tasks for efficiency.' : 'Ensure all materials are available before starting.'}
+              </div>
+          </div>
+      `;
+      
+      modal.show();
+  }
+  
+  function showInventoryDetails(itemId) {
+      const inventoryData = {
+          item1: {
+              name: 'Urea Fertilizer',
+              category: 'Fertilizers',
+              currentStock: '500 kg',
+              unit: 'kg',
+              lastUpdated: 'Today',
+              status: 'In Stock',
+              progress: 85,
+              alertThreshold: '50 kg',
+              supplier: 'ABC Fertilizers',
+              cost: '₹25/kg',
+              totalValue: '₹12,500',
+              usage: 'Applied to Field 1 and Field 2',
+              nextOrder: 'When stock reaches 100 kg'
+          },
+          item2: {
+              name: 'DAP Fertilizer',
+              category: 'Fertilizers',
+              currentStock: '200 kg',
+              unit: 'kg',
+              lastUpdated: 'Yesterday',
+              status: 'Low Stock',
+              progress: 25,
+              alertThreshold: '100 kg',
+              supplier: 'XYZ Agro',
+              cost: '₹35/kg',
+              totalValue: '₹7,000',
+              usage: 'Applied to Field 3',
+              nextOrder: 'Order immediately - low stock'
+          },
+          item3: {
+              name: 'Pesticide',
+              category: 'Pesticides',
+              currentStock: '50 liters',
+              unit: 'liters',
+              lastUpdated: '2 days ago',
+              status: 'In Stock',
+              progress: 65,
+              alertThreshold: '20 liters',
+              supplier: 'Crop Care Ltd',
+              cost: '₹150/liter',
+              totalValue: '₹7,500',
+              usage: 'Used for pest control in all fields',
+              nextOrder: 'When stock reaches 30 liters'
+          }
+      };
+      
+      const item = inventoryData[itemId];
+      if (!item) return;
+      
+      const modal = new bootstrap.Modal(document.getElementById('farmAnalyticsModal'));
+      const content = document.getElementById('analyticsContent');
+      
+      content.innerHTML = `
+          <div class="alert alert-info">
+              <i class="fas fa-boxes me-2"></i>
+              <strong>${item.name} Details</strong>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <h6>📦 Item Information</h6>
+                  <ul class="list-unstyled">
+                      <li><strong>Category:</strong> ${item.category}</li>
+                      <li><strong>Current Stock:</strong> ${item.currentStock}</li>
+                      <li><strong>Unit:</strong> ${item.unit}</li>
+                      <li><strong>Status:</strong> <span class="badge bg-success">${item.status}</span></li>
+                      <li><strong>Alert Threshold:</strong> ${item.alertThreshold}</li>
+                      <li><strong>Supplier:</strong> ${item.supplier}</li>
+                      <li><strong>Cost:</strong> ${item.cost}</li>
+                      <li><strong>Total Value:</strong> ${item.totalValue}</li>
+                  </ul>
+              </div>
+              <div class="col-md-6">
+                  <h6>📈 Stock Progress</h6>
+                  <div class="mb-3">
+                      <div class="d-flex justify-content-between">
+                          <span>Stock Level</span>
+                          <span>${item.progress}%</span>
+                      </div>
+                      <div class="progress">
+                          <div class="progress-bar bg-success" style="width: ${item.progress}%"></div>
+                      </div>
+                  </div>
+                  <h6>📋 Usage & Orders</h6>
+                  <ul class="list-unstyled">
+                      <li><strong>Usage:</strong> ${item.usage}</li>
+                      <li><strong>Last Updated:</strong> ${item.lastUpdated}</li>
+                      <li><strong>Next Order:</strong> ${item.nextOrder}</li>
+                  </ul>
+              </div>
+          </div>
+          <div class="mt-3">
+              <h6>🎯 AI Recommendations</h6>
+              <div class="alert alert-success">
+                  <i class="fas fa-robot me-2"></i>
+                  <strong>AI Analysis:</strong> ${item.name} stock is ${item.progress > 50 ? 'adequate' : 'running low'}. 
+                  ${item.progress < 30 ? 'Consider placing an order soon to avoid stockout.' : 'Stock levels are healthy for current operations.'}
+              </div>
+          </div>
+      `;
+      
+      modal.show();
+  }
+}
+
+// Visual layouts and tables now flow naturally without artificial constraints
+
+// Enhanced field details function with table navigation
+function showFieldDetails(fieldId) {
+    const fieldData = {
+        field1: {
+            name: 'Field 1',
+            area: '8 Acres',
+            crop: 'Soybean',
+            plantingDate: '15 Jul 2025',
+            expectedHarvest: '15 Oct 2025',
+            status: 'Growing',
+            progress: 65,
+            soilType: 'Black Soil',
+            irrigation: 'Drip Irrigation',
+            lastIrrigation: '2 days ago',
+            nextIrrigation: 'Tomorrow',
+            fertilizerApplied: 'NPK 20-20-20',
+            pestStatus: 'No issues detected',
+            yield: 'Expected: 3.2 tons/acre',
+            revenue: 'Projected: ₹1,28,000'
+        },
+        field2: {
+            name: 'Field 2',
+            area: '10 Acres',
+            crop: 'Cotton',
+            plantingDate: '1 Jul 2025',
+            expectedHarvest: '1 Dec 2025',
+            status: 'Growing',
+            progress: 45,
+            soilType: 'Red Soil',
+            irrigation: 'Sprinkler',
+            lastIrrigation: 'Today',
+            nextIrrigation: '3 days',
+            fertilizerApplied: 'Urea + DAP',
+            pestStatus: 'Minor pest activity',
+            yield: 'Expected: 2.8 tons/acre',
+            revenue: 'Projected: ₹2,80,000'
+        },
+        field3: {
+            name: 'Field 3',
+            area: '7 Acres',
+            crop: 'Moong',
+            plantingDate: '20 Jul 2025',
+            expectedHarvest: '20 Sep 2025',
+            status: 'Growing',
+            progress: 80,
+            soilType: 'Loamy Soil',
+            irrigation: 'Rain-fed',
+            lastIrrigation: 'Natural rainfall',
+            nextIrrigation: 'Not required',
+            fertilizerApplied: 'Organic compost',
+            pestStatus: 'Healthy crop',
+            yield: 'Expected: 1.5 tons/acre',
+            revenue: 'Projected: ₹1,05,000'
+        }
+    };
+    
+    const field = fieldData[fieldId];
+    if (!field) return;
+    
+    const modal = new bootstrap.Modal(document.getElementById('farmAnalyticsModal'));
+    const content = document.getElementById('analyticsContent');
+    
+    content.innerHTML = `
+        <div class="alert alert-success">
+            <i class="fas fa-map-marked-alt me-2"></i>
+            <strong>${field.name} Details</strong>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h6>🌱 Crop Information</h6>
+                <ul class="list-unstyled">
+                    <li><strong>Area:</strong> ${field.area}</li>
+                    <li><strong>Current Crop:</strong> ${field.crop}</li>
+                    <li><strong>Planting Date:</strong> ${field.plantingDate}</li>
+                    <li><strong>Expected Harvest:</strong> ${field.expectedHarvest}</li>
+                    <li><strong>Status:</strong> <span class="badge bg-success">${field.status}</span></li>
+                    <li><strong>Soil Type:</strong> ${field.soilType}</li>
+                    <li><strong>Irrigation:</strong> ${field.irrigation}</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>📈 Progress & Health</h6>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Growth Progress</span>
+                        <span>${field.progress}%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: ${field.progress}%"></div>
+                    </div>
+                </div>
+                <h6>💧 Irrigation Status</h6>
+                <ul class="list-unstyled">
+                    <li><strong>Last Irrigation:</strong> ${field.lastIrrigation}</li>
+                    <li><strong>Next Irrigation:</strong> ${field.nextIrrigation}</li>
+                    <li><strong>Fertilizer Applied:</strong> ${field.fertilizerApplied}</li>
+                    <li><strong>Pest Status:</strong> ${field.pestStatus}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <h6>💰 Financial Projections</h6>
+                <ul class="list-unstyled">
+                    <li><strong>Expected Yield:</strong> ${field.yield}</li>
+                    <li><strong>Projected Revenue:</strong> ${field.revenue}</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>🎯 AI Recommendations</h6>
+                <div class="alert alert-info">
+                    <i class="fas fa-robot me-2"></i>
+                    <strong>AI Analysis:</strong> ${field.crop} is ${field.progress > 50 ? 'progressing well' : 'in early growth stage'}. 
+                    ${field.progress > 70 ? 'Prepare for harvest activities.' : 'Monitor irrigation and pest control.'}
+                </div>
+            </div>
+        </div>
+
+    `;
+    
+    modal.show();
+}
+
+
+</script>
+{% endblock %} 

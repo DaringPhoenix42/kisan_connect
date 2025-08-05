@@ -1,0 +1,500 @@
+{% extends "base.html" %}
+
+{% block title %}Gyan Kendra - Knowledge Center | Kisan Mitra{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12 text-center mb-5">
+            <h1 class="display-4 fw-bold text-success">
+                <i class="fas fa-graduation-cap me-3"></i>Gyan Kendra
+            </h1>
+            <p class="lead text-muted">Knowledge center with latest agricultural news, government schemes, and community forum.</p>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs" id="knowledgeTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="news-tab" data-bs-toggle="tab" data-bs-target="#news" type="button" role="tab">
+                        <i class="fas fa-newspaper me-2"></i>Latest News
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="schemes-tab" data-bs-toggle="tab" data-bs-target="#schemes" type="button" role="tab">
+                        <i class="fas fa-government me-2"></i>Government Schemes
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="weather-tab" data-bs-toggle="tab" data-bs-target="#weather" type="button" role="tab">
+                        <i class="fas fa-cloud-sun me-2"></i>Weather Updates
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="forum-tab" data-bs-toggle="tab" data-bs-target="#forum" type="button" role="tab">
+                        <i class="fas fa-comments me-2"></i>Community Forum
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="knowledgeTabsContent">
+        <!-- News Tab -->
+        <div class="tab-pane fade show active" id="news" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-8">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="mb-0">
+                            <i class="fas fa-newspaper me-2"></i>Latest Agricultural News
+                        </h3>
+                        <button class="btn btn-outline-success btn-sm" id="refreshNews">
+                            <i class="fas fa-sync-alt me-1"></i>Refresh
+                        </button>
+                    </div>
+                    
+                    <!-- AI-Powered News Container -->
+                    <div id="newsContainer">
+                        <div class="text-center">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading latest news...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-fire me-2"></i>Trending Topics
+                            </h5>
+                            <div class="list-group list-group-flush">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-arrow-up text-success me-2"></i>MSP for Kharif Crops
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-arrow-up text-success me-2"></i>Weather Forecast
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-arrow-up text-success me-2"></i>Fertilizer Subsidy
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-arrow-up text-success me-2"></i>Crop Insurance
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Government Schemes Tab -->
+        <div class="tab-pane fade" id="schemes" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <h3 class="mb-4">
+                        <i class="fas fa-government me-2"></i>Government Schemes for Farmers
+                    </h3>
+                    
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">
+                                        <i class="fas fa-rupee-sign me-2"></i>PM-KISAN
+                                    </h5>
+                                    <p class="card-text">
+                                        <strong>Benefit:</strong> ₹6,000 per year in three equal installments<br>
+                                        <strong>Eligibility:</strong> Small and marginal farmers<br>
+                                        <strong>Last Date:</strong> December 31, 2025
+                                    </p>
+                                    <button class="btn btn-outline-success btn-sm">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mb-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">
+                                        <i class="fas fa-shield-alt me-2"></i>PM Fasal Bima Yojana
+                                    </h5>
+                                    <p class="card-text">
+                                        <strong>Benefit:</strong> Crop insurance coverage<br>
+                                        <strong>Premium:</strong> 2% for Kharif, 1.5% for Rabi<br>
+                                        <strong>Coverage:</strong> Natural calamities, pests, diseases
+                                    </p>
+                                    <button class="btn btn-outline-success btn-sm">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mb-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">
+                                        <i class="fas fa-tint me-2"></i>PMKSY
+                                    </h5>
+                                    <p class="card-text">
+                                        <strong>Benefit:</strong> Irrigation infrastructure support<br>
+                                        <strong>Coverage:</strong> Drip irrigation, sprinklers<br>
+                                        <strong>Subsidy:</strong> Up to 55% for small farmers
+                                    </p>
+                                    <button class="btn btn-outline-success btn-sm">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mb-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">
+                                        <i class="fas fa-seedling me-2"></i>Organic Farming Scheme
+                                    </h5>
+                                    <p class="card-text">
+                                        <strong>Benefit:</strong> Support for organic farming<br>
+                                        <strong>Duration:</strong> 3 years<br>
+                                        <strong>Support:</strong> ₹50,000 per hectare
+                                    </p>
+                                    <button class="btn btn-outline-success btn-sm">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Tab -->
+        <div class="tab-pane fade" id="weather" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-8">
+                    <h3 class="mb-4">
+                        <i class="fas fa-cloud-sun me-2"></i>Weather Forecast & Alerts
+                    </h3>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Nashik</h5>
+                                    <div class="fs-1 text-warning mb-2">
+                                        <i class="fas fa-sun"></i>
+                                    </div>
+                                    <div class="fs-3 fw-bold">32°C</div>
+                                    <p class="text-muted">Partly Cloudy</p>
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <small class="text-muted">Humidity</small><br>
+                                            <strong>65%</strong>
+                                        </div>
+                                        <div class="col-4">
+                                            <small class="text-muted">Wind</small><br>
+                                            <strong>12 km/h</strong>
+                                        </div>
+                                        <div class="col-4">
+                                            <small class="text-muted">Rain</small><br>
+                                            <strong>20%</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="fas fa-calendar me-2"></i>5-Day Forecast
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <small>Today</small><br>
+                                            <i class="fas fa-sun text-warning"></i><br>
+                                            <strong>32°C</strong>
+                                        </div>
+                                        <div class="col text-center">
+                                            <small>Tomorrow</small><br>
+                                            <i class="fas fa-cloud text-info"></i><br>
+                                            <strong>28°C</strong>
+                                        </div>
+                                        <div class="col text-center">
+                                            <small>Day 3</small><br>
+                                            <i class="fas fa-cloud-rain text-primary"></i><br>
+                                            <strong>25°C</strong>
+                                        </div>
+                                        <div class="col text-center">
+                                            <small>Day 4</small><br>
+                                            <i class="fas fa-cloud text-info"></i><br>
+                                            <strong>27°C</strong>
+                                        </div>
+                                        <div class="col text-center">
+                                            <small>Day 5</small><br>
+                                            <i class="fas fa-sun text-warning"></i><br>
+                                            <strong>30°C</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Weather Alerts -->
+                    <div class="alert alert-warning">
+                        <h6><i class="fas fa-exclamation-triangle me-2"></i>Weather Alert</h6>
+                        <p class="mb-0">Heavy rainfall expected in Nashik region on July 25-26. Farmers are advised to take necessary precautions for their crops.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-bell me-2"></i>Weather Alerts
+                            </h5>
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item">
+                                    <small class="text-muted">July 25-26</small><br>
+                                    <strong>Heavy Rainfall Alert</strong><br>
+                                    <small>Nashik Region</small>
+                                </div>
+                                <div class="list-group-item">
+                                    <small class="text-muted">July 28</small><br>
+                                    <strong>Heat Wave Warning</strong><br>
+                                    <small>Central Maharashtra</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Forum Tab -->
+        <div class="tab-pane fade" id="forum" role="tabpanel">
+            <div class="row mt-4">
+                <div class="col-lg-8">
+                    <h3 class="mb-4">
+                        <i class="fas fa-comments me-2"></i>Community Forum
+                    </h3>
+                    
+                    <!-- New Post Form -->
+                    <div class="form-container mb-4">
+                        <h5>Ask a Question</h5>
+                        <form id="forumForm">
+                            <div class="mb-3">
+                                <label for="postTitle" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="postTitle" placeholder="Enter your question title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="postContent" class="form-label">Question</label>
+                                <textarea class="form-control" id="postContent" rows="4" placeholder="Describe your question in detail..." required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="postCategory" class="form-label">Category</label>
+                                <select class="form-select" id="postCategory" required>
+                                    <option value="">Select category</option>
+                                    <option value="crops">Crop Management</option>
+                                    <option value="diseases">Disease Control</option>
+                                    <option value="irrigation">Irrigation</option>
+                                    <option value="fertilizer">Fertilizers</option>
+                                    <option value="market">Market & Prices</option>
+                                    <option value="general">General</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Post Question
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Forum Posts -->
+                    <div class="forum-post">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="text-success">My cotton flowers are dropping, what should I do?</h5>
+                            <span class="badge bg-warning">Crop Management</span>
+                        </div>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-user me-1"></i>Farmer Rajesh | 
+                            <i class="fas fa-calendar me-1"></i>July 22, 2025
+                        </p>
+                        <p>I noticed that my cotton flowers are dropping before they can form bolls. The plants look healthy otherwise. Has anyone faced this issue? What solutions worked for you?</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <button class="btn btn-outline-success btn-sm me-2">
+                                    <i class="fas fa-thumbs-up me-1"></i>Helpful (5)
+                                </button>
+                                <button class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-comment me-1"></i>Reply (3)
+                                </button>
+                            </div>
+                            <small class="text-muted">2 hours ago</small>
+                        </div>
+                    </div>
+                    
+                    <div class="forum-post">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="text-success">Best time to apply NPK fertilizer for soybean?</h5>
+                            <span class="badge bg-info">Fertilizers</span>
+                        </div>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-user me-1"></i>Farmer Priya | 
+                            <i class="fas fa-calendar me-1"></i>July 21, 2025
+                        </p>
+                        <p>I'm growing soybean this season and want to know the optimal time to apply NPK fertilizer. Should I apply it at sowing or wait for a specific growth stage?</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <button class="btn btn-outline-success btn-sm me-2">
+                                    <i class="fas fa-thumbs-up me-1"></i>Helpful (8)
+                                </button>
+                                <button class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-comment me-1"></i>Reply (6)
+                                </button>
+                            </div>
+                            <small class="text-muted">1 day ago</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-fire me-2"></i>Popular Topics
+                            </h5>
+                            <div class="list-group list-group-flush">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-arrow-up text-success me-2"></i>Cotton Flower Drop
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-arrow-up text-success me-2"></i>Soybean Fertilizer
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-arrow-up text-success me-2"></i>Drip Irrigation Setup
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-arrow-up text-success me-2"></i>Market Prices
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const forumForm = document.getElementById('forumForm');
+    
+    // Load AI-powered news
+    loadNews();
+    
+    // Add refresh button functionality
+    const refreshNewsBtn = document.getElementById('refreshNews');
+    if (refreshNewsBtn) {
+        refreshNewsBtn.addEventListener('click', async function() {
+            const originalText = refreshNewsBtn.innerHTML;
+            KisanMitra.showLoading(refreshNewsBtn);
+            
+            try {
+                await loadNews();
+                KisanMitra.showSuccess('News updated successfully!');
+            } catch (error) {
+                console.error('Error:', error);
+                KisanMitra.showError('Failed to refresh news. Please try again.');
+            } finally {
+                KisanMitra.hideLoading(refreshNewsBtn, originalText);
+            }
+        });
+    }
+    
+    forumForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!KisanMitra.validateForm(forumForm)) {
+            KisanMitra.showError('Please fill in all required fields');
+            return;
+        }
+        
+        const title = document.getElementById('postTitle').value;
+        const content = document.getElementById('postContent').value;
+        const category = document.getElementById('postCategory').value;
+        
+        // Simulate posting
+        KisanMitra.showSuccess('Your question has been posted successfully!');
+        forumForm.reset();
+        
+        // In a real app, you would send this to the server
+        console.log('New forum post:', { title, content, category });
+    });
+});
+
+async function loadNews() {
+    try {
+        const response = await KisanMitra.API.get('/api/agricultural-news');
+        const newsContainer = document.getElementById('newsContainer');
+        
+        if (response.news && response.news.length > 0) {
+            let newsHTML = '';
+            
+            response.news.forEach(article => {
+                const categoryClass = getCategoryClass(article.category);
+                newsHTML += `
+                    <div class="news-item mb-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="text-success mb-0">${article.headline}</h5>
+                            <span class="badge ${categoryClass}">${article.category}</span>
+                        </div>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-calendar me-1"></i>${article.date} | 
+                            <i class="fas fa-tag me-1"></i>${article.relevance}
+                        </p>
+                        <p class="mb-2">${article.summary}</p>
+                        <small class="text-muted">
+                            <i class="fas fa-newspaper me-1"></i>${article.source}
+                            ${response.ai_used ? ' <i class="fas fa-robot text-success"></i>AI Generated' : ''}
+                        </small>
+                    </div>
+                `;
+            });
+            
+            newsContainer.innerHTML = newsHTML;
+            
+            if (response.ai_used) {
+                // Show AI status
+                const aiStatus = document.createElement('div');
+                aiStatus.className = 'alert alert-success mb-3';
+                aiStatus.innerHTML = `
+                    <i class="fas fa-robot me-2"></i>
+                    <strong>AI-Powered News:</strong> Latest agricultural updates generated using artificial intelligence
+                    ${response.ai_note ? `<br><small class="text-muted">${response.ai_note}</small>` : ''}
+                `;
+                newsContainer.parentNode.insertBefore(aiStatus, newsContainer);
+            }
+        }
+    } catch (error) {
+        console.error('Error loading news:', error);
+    }
+}
+
+function getCategoryClass(category) {
+    const classes = {
+        'Policy': 'bg-primary',
+        'Market': 'bg-success',
+        'Technology': 'bg-info',
+        'Weather': 'bg-warning',
+        'Success': 'bg-secondary'
+    };
+    return classes[category] || 'bg-secondary';
+}
+</script>
+{% endblock %} 
