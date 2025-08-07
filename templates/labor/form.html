@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{% if form_action == 'edit' %}Edit Worker{% else %}Add New Worker{% endif %}</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label for="full_name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="full_name" name="full_name" value="{{ worker.full_name or '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phone" name="phone" value="{{ worker.phone or '' }}">
+    </div>
+    <div class="mb-3">
+        <label for="daily_wage" class="form-label">Daily Wage ($)</label>
+        <input type="number" step="1" class="form-control" id="daily_wage" name="daily_wage" value="{{ worker.daily_wage or '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="skills" class="form-label">Skills</label>
+        <textarea class="form-control" id="skills" name="skills" rows="3">{{ worker.skills or '' }}</textarea>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save Worker</button>
+    <a href="{{ url_for('labor.list_workers') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

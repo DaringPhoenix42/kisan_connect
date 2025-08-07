@@ -2841,3 +2841,179 @@ p {
     border-color: var(--primary-hover);
     color: #ffffff !important;
 } 
+
+/* Field Grid Layout */
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.field-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.field-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.field-item.empty-field {
+    border-style: dashed;
+    opacity: 0.7;
+}
+
+.field-item.empty-field:hover {
+    opacity: 1;
+    border-color: var(--primary-color);
+}
+
+.field-header {
+    margin-bottom: 0.75rem;
+}
+
+.field-header h6 {
+    margin: 0;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.field-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.crop-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.field-status {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.field-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.field-progress small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Worker Grid Layout */
+.worker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.worker-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.worker-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.worker-item.empty-worker {
+    border-style: dashed;
+    opacity: 0.7;
+}
+
+.worker-item.empty-worker:hover {
+    opacity: 1;
+    border-color: var(--primary-color);
+}
+
+.worker-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.worker-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.worker-info h6 {
+    margin: 0;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.worker-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.worker-task {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.worker-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.worker-progress small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Fix for disappearing button text on hover */
+.card .btn.btn-warning:hover {
+    background-color: #d39e00; /* A slightly darker yellow */
+    border-color: #ca9800;
+    color: #000 !important; /* Forces the text to remain black */
+}
+
+/* Add subtle animation to visual layouts */
+/* Fix for table text color in dark theme */
+.table td, .table th {
+    color: #333; /* A dark grey for better readability */
+}
+
+/* Make striped table rows slightly darker */
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}

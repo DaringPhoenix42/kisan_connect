@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{% if form_action == 'edit' %}Edit Task{% else %}Add New Task{% endif %}</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label for="name" class="form-label">Task Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ task.name or '' }}" required>
+    </div>
+     <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3">{{ task.description or '' }}</textarea>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="priority" class="form-label">Priority</label>
+            <select class="form-select" id="priority" name="priority" required>
+                <option value="High" {% if task and task.priority == 'High' %}selected{% endif %}>High</option>
+                <option value="Medium" {% if task and task.priority == 'Medium' %}selected{% endif %}>Medium</option>
+                <option value="Low" {% if task and task.priority == 'Low' %}selected{% endif %}>Low</option>
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="status" class="form-label">Status</label>
+             <select class="form-select" id="status" name="status" required>
+                <option value="Pending" {% if not task or task.status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="In Progress" {% if task and task.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                <option value="Completed" {% if task and task.status == 'Completed' %}selected{% endif %}>Completed</option>
+            </select>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="field_id" class="form-label">Assign to Field</label>
+            <select class="form-select" id="field_id" name="field_id" required>
+                <option value="">Select a field</option>
+                {% for field in lands %}
+                <option value="{{ field.id }}" {% if task and task.field_id == field.id %}selected{% endif %}>{{ field.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="worker_id" class="form-label">Assign to Worker (Optional)</label>
+             <select class="form-select" id="worker_id" name="worker_id">
+                <option value="">Unassigned</option>
+                {% for worker in workers %}
+                <option value="{{ worker.id }}" {% if task and task.worker_id == worker.id %}selected{% endif %}>{{ worker.full_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save Task</button>
+    <a href="{{ url_for('tasks.list_tasks') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

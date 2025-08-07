@@ -1,272 +1,238 @@
 import google.generativeai as genai
-import os
-from datetime import datetime
 import json
+import re
+from PIL import Image
 
 class KisanMitraAI:
     def __init__(self, api_key):
-        """Initialize the AI system with Gemini API"""
-        genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
-        
-    def get_crop_recommendation(self, location, soil_type, irrigation, land_area, season, budget):
-        """
-        Get AI-powered crop recommendations using Gemini
-        """
-        
-        # Create a comprehensive prompt for the AI
-        prompt = f"""
-        You are an expert agricultural AI assistant for Indian farmers. Based on the following parameters, 
-        provide detailed crop recommendations for maximum profitability and sustainability.
+        """Initializes the AI system with the provided API key."""
+        try:
+            genai.configure(api_key=api_key)
+            self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
+            print("✅ Gemini AI Model Initialized Successfully.")
+        except Exception as e:
+            print(f"❌ Failed to configure Gemini AI: {e}")
+            self.model = None
 
-        FARMER PARAMETERS:
-        - Location: {location}, Maharashtra, India
+    def _get_ai_response(self, prompt, generation_config):
+        """Helper function to get and parse response from the AI model."""
+        if not self.model:
+            raise ConnectionError("Gemini AI Model is not initialized.")
+
+        try:
+            response = self.model.generate_content(prompt, generation_config=generation_config)
+            cleaned_text = re.sub(r'```json\s*|\s*```', '', response.text, flags=re.DOTALL)
+            return json.loads(cleaned_text)
+        
+        except json.JSONDecodeError:
+            print(f"⚠️ AI returned a non-JSON response. Raw text: {response.text}")
+            raise ValueError("AI did not return a valid JSON format.")
+        except Exception as e:
+            print(f"❌ An unexpected error occurred during AI call: {e}")
+            raise
+
+    def get_crop_recommendation(self, location, soil_type, irrigation, land_area, season, budget, generation_config):
+        """Generates a detailed crop recommendation using the Gemini API."""
+        prompt = f"""
+        As an expert agricultural advisor for Maharashtra, India, provide crop recommendations.
+        Your response MUST be a valid JSON object. Do not include any text before or after the JSON.
+        
+        Farmer's Input:
+        - Location: {location}, Maharashtra
         - Soil Type: {soil_type}
         - Irrigation: {irrigation}
         - Land Area: {land_area} acres
         - Season: {season}
-        - Budget: ₹{budget:,}
+        - Budget: INR {budget}
 
-        CURRENT CONTEXT:
-        - Date: {datetime.now().strftime('%B %Y')}
-        - Current Season: Kharif (Monsoon) - July to October
-        - Market Conditions: High demand for pulses and oilseeds
-
-        REQUIREMENTS:
-        1. Recommend 3-4 best crops with confidence scores (0-100)
-        2. For each crop, provide:
-           - Scientific name and common name
-           - MSP (Minimum Support Price) per quintal
-           - Water requirement (Low/Moderate/High)
-           - Time to harvest (days)
-           - Risk level (Low/Moderate/High)
-           - Expected profit per acre
-           - Market demand analysis
-           - Specific reason for recommendation
-
-        3. Consider:
-           - Soil suitability
-           - Climate conditions
-           - Market prices and demand
-           - Water availability
-           - Seasonal timing
-           - Government support schemes
-           - Pest and disease resistance
-
-        4. Provide additional insights:
-           - Best planting time
-           - Required fertilizers
-           - Pest management tips
-           - Market timing for selling
-
-        RESPONSE FORMAT:
-        Return a JSON object with the following structure:
+        Provide the top 2-3 crop recommendations in this exact JSON format:
         {{
-            "location": "location_name",
-            "analysis_date": "current_date",
+            "location": "{location}",
             "recommendations": [
-                {{
-                    "crop": "crop_key",
-                    "confidence": confidence_score,
-                    "reason": "detailed_reasoning",
-                    "data": {{
-                        "name": "Crop Name",
-                        "scientific_name": "Scientific Name",
-                        "msp": msp_price,
-                        "water_need": "Low/Moderate/High",
-                        "harvest_time": "X-Y days",
-                        "risk": "Low/Moderate/High",
-                        "expected_profit_per_acre": profit_amount,
-                        "market_demand": "High/Moderate/Low",
-                        "planting_time": "specific_time",
-                        "fertilizer_requirement": "NPK ratio",
-                        "pest_management": "key_tips"
-                    }}
-                }}
+                {{"crop": "crop_name_1", "confidence": 92, "reason": "your_reasoning_here", "data": {{ "name": "Crop Name 1", "msp": 5000, "water_need": "Moderate", "harvest_time": "90-100 days", "risk": "Low" }}}},
+                {{"crop": "crop_name_2", "confidence": 85, "reason": "your_reasoning_here", "data": {{ "name": "Crop Name 2", "msp": 7000, "water_need": "High", "harvest_time": "150-180 days", "risk": "Medium" }}}}
             ],
-            "market_analysis": {{
-                "trend": "market_trend",
-                "price_forecast": "price_prediction",
-                "demand_outlook": "demand_prediction"
-            }},
-            "additional_insights": [
-                "insight1",
-                "insight2",
-                "insight3"
-            ]
+            "market_data": {{"crop_name_1": 5200, "crop_name_2": 7100}}, "ai_used": true
         }}
+        """
+        return self._get_ai_response(prompt, generation_config)
 
-        Focus on practical, actionable advice that Indian farmers can implement immediately.
-        """
-        
+    def analyze_plant_disease(self, image_path, generation_config):
+        """Analyzes a plant image for diseases using the Gemini Vision model."""
+        if not self.model:
+            raise ConnectionError("Gemini AI Model is not initialized.")
         try:
-            # Get AI response
-            response = self.model.generate_content(prompt)
-            
-            # Parse the JSON response
-            ai_recommendations = json.loads(response.text)
-            
-            return ai_recommendations
-            
-        except Exception as e:
-            print(f"AI Error: {e}")
-            # Fallback to mock data
-            return self.get_fallback_recommendations(location, soil_type, irrigation)
-    
-    def analyze_plant_disease(self, image_path):
-        """
-        Analyze plant diseases using Gemini Vision API
-        """
-        try:
-            # Use Gemini Vision for image analysis
-            vision_model = genai.GenerativeModel('gemini-1.5-flash')
-            
-            # Load and encode the image
-            with open(image_path, 'rb') as img_file:
-                image_data = img_file.read()
-            
+            image = Image.open(image_path)
             prompt = """
-            You are an expert plant pathologist. Analyze this plant image and provide:
+            As an expert plant pathologist, analyze the attached image of a plant leaf.
+            Your response MUST be a valid JSON object. Do not include any text before or after the JSON.
             
-            1. Disease identification (if any)
-            2. Crop type identification
-            3. Confidence level (0-100%)
-            4. Severity assessment (Low/Moderate/High)
-            5. Treatment recommendations:
-               - Organic solutions
-               - Chemical solutions (if necessary)
-               - Preventive measures
-            6. Additional care tips
-            
-            Format the response as JSON:
+            Provide the following in this exact JSON format:
             {
-                "disease": "disease_name",
-                "crop": "crop_type",
-                "confidence": confidence_percentage,
-                "severity": "Low/Moderate/High",
+                "disease": "Disease Name", "crop": "Crop Name", "confidence": 95, "severity": "Moderate",
                 "solutions": {
-                    "organic": "organic_treatment",
-                    "chemical": "chemical_treatment",
-                    "preventive": "preventive_measures"
-                },
-                "care_tips": "additional_care_instructions"
+                    "organic": "A brief, clear organic solution.",
+                    "chemical": "A brief, clear chemical solution.",
+                    "preventive": "A brief, clear preventive measure."
+                }, "ai_used": true
             }
             """
-            
-            response = vision_model.generate_content([prompt, image_data])
-            return json.loads(response.text)
-            
+            response = self.model.generate_content([prompt, image], generation_config=generation_config)
+            cleaned_text = re.sub(r'```json\s*|\s*```', '', response.text, flags=re.DOTALL)
+            return json.loads(cleaned_text)
         except Exception as e:
-            print(f"Vision AI Error: {e}")
-            return self.get_fallback_disease_analysis()
-    
-    def get_irrigation_advice(self, crop, soil_type, weather, growth_stage):
-        """
-        Get AI-powered irrigation advice
-        """
+            print(f"❌ An unexpected error occurred during AI image analysis: {e}")
+            raise
+            
+    def get_irrigation_advice(self, crop, soil_type, land_area, weather, growth_stage, generation_config):
+        """Generates irrigation advice using the Gemini API."""
         prompt = f"""
-        As an agricultural irrigation expert, provide detailed irrigation recommendations for:
+        As an agricultural irrigation expert for Maharashtra, India, provide a detailed irrigation plan.
+        Your response MUST be a valid JSON object without any markdown formatting.
         
-        Crop: {crop}
-        Soil Type: {soil_type}
-        Weather: {weather}
-        Growth Stage: {growth_stage}
-        
-        Provide recommendations for:
-        1. Water requirement (liters per acre per day)
-        2. Irrigation frequency
-        3. Best time for irrigation
-        4. Irrigation method recommendations
-        5. Water conservation tips
-        
-        Return as JSON:
+        Inputs:
+        - Crop: {crop}
+        - Soil Type: {soil_type}
+        - Land Area: {land_area} acres
+        - Current Weather: {weather}
+        - Growth Stage: {growth_stage}
+
+        Return recommendations in this exact JSON format:
         {{
-            "water_needed_liters": amount,
-            "frequency": "frequency_description",
-            "best_time": "optimal_time",
-            "tips": "conservation_tips",
-            "method": "recommended_method"
+          "water_needed_liters_per_acre": 15000,
+          "frequency": "Every 2-3 days",
+          "best_time": "Early morning (5 AM - 8 AM)",
+          "method_feedback": "Drip irrigation is highly recommended for {crop} to ensure water efficiency.",
+          "optimization_tips": "Use mulch to reduce soil moisture evaporation. Check soil moisture before watering.",
+          "ai_used": true
         }}
         """
-        
-        try:
-            response = self.model.generate_content(prompt)
-            return json.loads(response.text)
-        except Exception as e:
-            print(f"Irrigation AI Error: {e}")
-            return self.get_fallback_irrigation_data()
-    
-    def get_fallback_recommendations(self, location, soil_type, irrigation):
-        """Fallback recommendations when AI is unavailable"""
-        return {
-            "location": location,
-            "analysis_date": datetime.now().strftime("%B %d, %Y"),
-            "recommendations": [
-                {
-                    "crop": "soybean",
-                    "confidence": 85,
-                    "reason": "Suitable for current conditions based on historical data",
-                    "data": {
-                        "name": "Soybean",
-                        "msp": 4800,
-                        "water_need": "Moderate",
-                        "harvest_time": "90-100 days",
-                        "risk": "Moderate"
-                    }
-                }
-            ]
-        }
-    
-    def get_fallback_disease_analysis(self):
-        """Fallback disease analysis when AI is unavailable"""
-        return {
-            "disease": "Unknown",
-            "crop": "Unknown",
-            "confidence": 0,
-            "severity": "Unknown",
-            "solutions": {
-                "organic": "Consult local agricultural expert",
-                "chemical": "Seek professional advice",
-                "preventive": "Maintain field hygiene"
-            }
-        }
-    
-    def get_fallback_irrigation_data(self):
-        """Fallback irrigation data when AI is unavailable"""
-        return {
-            "water_needed_liters": 25,
-            "frequency": "Every 3-4 days",
-            "best_time": "Early morning or evening",
-            "tips": "Avoid watering during peak sunlight hours"
-        }
+        return self._get_ai_response(prompt, generation_config)
 
-# Example usage
-if __name__ == "__main__":
-    # Import config
-    try:
-        from config import get_api_key, is_ai_available
-    except ImportError:
-        print("❌ config.py not found. Please create it with your API key.")
-        exit(1)
-    
-    # Check if AI is available
-    if is_ai_available():
-        api_key = get_api_key()
-        ai = KisanMitraAI(api_key)
+    def get_fertilizer_advice(self, crop, soil_type, growth_stage, generation_config):
+        """Generates fertilizer recommendations using the Gemini API."""
+        prompt = f"""
+        As an agronomist specializing in Indian agriculture, provide a fertilizer plan.
+        Your response MUST be a valid JSON object without any markdown formatting.
+
+        Inputs:
+        - Crop: {crop}
+        - Soil Type: {soil_type}
+        - Growth Stage: {growth_stage}
+
+        Return a plan in this exact JSON format:
+        {{
+            "quantity_per_acre": {{
+                "nitrogen": "20 kg",
+                "phosphorus": "40 kg",
+                "potassium": "20 kg"
+            }},
+            "application_timing": "Apply as a basal dose during sowing.",
+            "application_method": "Mix with the top 5-10 cm of soil before planting.",
+            "organic_alternatives": "Well-decomposed farmyard manure (FYM) at 10 tons/acre.",
+            "ai_used": true
+        }}
+        """
+        return self._get_ai_response(prompt, generation_config)
+
+    def get_soil_health_analysis(self, soil_type, ph, organic_matter, nitrogen, phosphorus, potassium, generation_config):
+        """Generates a soil health analysis using the Gemini API."""
+        prompt = f"""
+        As a soil scientist, analyze soil health data from a farm in Maharashtra, India.
+        Your response MUST be a valid JSON object without any markdown formatting.
+
+        Inputs:
+        - Soil Type: {soil_type}
+        - pH Level: {ph}
+        - Organic Matter (%): {organic_matter}
+        - Nitrogen (N) (kg/ha): {nitrogen}
+        - Phosphorus (P) (kg/ha): {phosphorus}
+        - Potassium (K) (kg/ha): {potassium}
+
+        Provide a comprehensive analysis in this exact JSON format:
+        {{
+            "soil_health_score": "8.2/10",
+            "health_status": "Good",
+            "ph_analysis": {{
+                "current_status": "Near Neutral",
+                "recommendation": "Maintain current pH. No immediate action required."
+            }},
+            "nutrient_analysis": {{
+                "nitrogen_status": "Adequate",
+                "phosphorus_status": "Slightly Deficient",
+                "potassium_status": "Good"
+            }},
+            "suitable_crops": ["Sugarcane", "Cotton", "Soybean"],
+            "soil_amendments": ["Add vermicompost to improve phosphorus levels.", "Continue crop rotation."],
+            "long_term_plan": "Implement crop rotation with leguminous crops to naturally fix nitrogen.",
+            "ai_used": true
+        }}
+        """
+        return self._get_ai_response(prompt, generation_config)
+
+    def get_agricultural_news(self, generation_config):
+        """Generates the latest agricultural news using the Gemini API."""
+        prompt = """
+        As an agricultural journalist for India, provide the 3 latest and most relevant news headlines for farmers in Maharashtra.
+        Your response MUST be a valid JSON object without any markdown formatting.
+
+        Return the output in this exact JSON format:
+        {
+          "articles": [
+            {
+              "headline": "A recent and relevant news headline",
+              "summary": "A brief one-sentence summary of the news.",
+              "category": "Market",
+              "source": "AI Generated",
+              "date": "2025-08-07"
+            }
+          ]
+        }
+        """
+        return self._get_ai_response(prompt, generation_config)
+
+    def get_government_schemes(self, generation_config):
+        """Gets details on relevant government schemes for farmers using the Gemini API."""
+        prompt = """
+        As a government policy expert for Indian agriculture, list 3 key central or Maharashtra state government schemes currently active for farmers.
+        Your response MUST be a valid JSON object without any markdown formatting.
+
+        For each scheme, provide a name, a brief objective, and the main benefit.
+        Return the output in this exact JSON format:
+        {
+          "schemes": [
+            {
+              "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+              "objective": "To provide insurance coverage and financial support to farmers in the event of failure of any of the notified crops as a result of natural calamities, pests & diseases.",
+              "benefit": "Financial stability against crop loss."
+            }
+          ]
+        }
+        """
+        return self._get_ai_response(prompt, generation_config)
+
+    def get_weather_analysis(self, location, generation_config):
+        """Gets a weather analysis for a given location using the Gemini API."""
+        prompt = f"""
+        As a meteorologist, provide a weather analysis for {location}, Maharashtra, India.
+        Your response MUST be a valid JSON object without any markdown formatting.
         
-        print("🤖 Testing AI Integration...")
-        
-        # Test crop recommendation
-        recommendation = ai.get_crop_recommendation(
-            location="Nashik",
-            soil_type="Black Soil",
-            irrigation="Rain-fed",
-            land_area=5,
-            season="Kharif",
-            budget=50000
-        )
-        
-        print("✅ AI Crop Recommendation:")
-        print(json.dumps(recommendation, indent=2))
-    else:
-        print("❌ AI not available. Please check your API key in config.py") 
+        Provide the current weather and a 3-day forecast with an agricultural impact summary.
+        Return the output in this exact JSON format:
+        {{
+          "location": "{location}",
+          "current": {{
+            "condition": "Partly Cloudy",
+            "temperature_celsius": 28,
+            "humidity_percent": 75,
+            "wind_kph": 15
+          }},
+          "forecast": [
+            {{"day": "Today", "condition": "Light rain possible", "max_temp_celsius": 30}},
+            {{"day": "Tomorrow", "condition": "Cloudy with sunny spells", "max_temp_celsius": 31}},
+            {{"day": "Day After", "condition": "Sunny", "max_temp_celsius": 32}}
+          ],
+          "agricultural_impact": "Favorable conditions for Kharif crops. Monitor for light showers, which may reduce the need for immediate irrigation."
+        }}
+        """
+        return self._get_ai_response(prompt, generation_config)

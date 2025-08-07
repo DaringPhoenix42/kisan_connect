@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Financial Management</h1>
+    <a href="{{ url_for('finance.add_transaction') }}" class="btn btn-primary">Add New Transaction</a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Total Income</h5>
+                <p class="card-text fs-4">${{ "%.2f"|format(summary.income) }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Total Expense</h5>
+                <p class="card-text fs-4">${{ "%.2f"|format(summary.expense) }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-dark bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Net Profit</h5>
+                <p class="card-text fs-4">${{ "%.2f"|format(summary.profit) }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for trans in transactions %}
+        <tr>
+            <td>{{ trans.date.strftime('%Y-%m-%d') }}</td>
+            <td>{{ trans.description }}</td>
+            <td>{{ trans.category }}</td>
+            <td>
+                <span class="badge {% if trans.type == 'Income' %}bg-success{% else %}bg-danger{% endif %}">{{ trans.type }}</span>
+            </td>
+            <td>${{ "%.2f"|format(trans.amount) }}</td>
+            <td>
+                <a href="{{ url_for('finance.edit_transaction', id=trans.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+                <form action="{{ url_for('finance.delete_transaction', id=trans.id) }}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this transaction?');">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-center">No transactions found. Add one to get started.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('farm_management') }}" class="btn btn-secondary mt-3">Back to Farm Dashboard</a>
+{% endblock %}

@@ -3,9 +3,9 @@
 
 import os
 
-# Try to import secrets, but don't fail if it doesn't exist
+# Try to import api_secrets, but don't fail if it doesn't exist
 try:
-    from secrets import GEMINI_API_KEY as SECRET_API_KEY
+    from api_secrets import GEMINI_API_KEY as SECRET_API_KEY
 except ImportError:
     SECRET_API_KEY = None
 
@@ -32,9 +32,9 @@ def get_api_key():
     if env_key and env_key.strip():
         return env_key
     
-    # Try to get from secrets file
+    # Try to get from api_secrets file
     try:
-        from secrets import GEMINI_API_KEY as secret_key
+        from api_secrets import GEMINI_API_KEY as secret_key
         if secret_key and secret_key != "your_actual_gemini_api_key_here":
             return secret_key
     except ImportError:
@@ -66,15 +66,15 @@ def print_api_key_status():
     else:
         print("❌ Environment variable GEMINI_API_KEY is not set")
     
-    # Check secrets file
+    # Check api_secrets file
     try:
-        from secrets import GEMINI_API_KEY as secret_key
+        from api_secrets import GEMINI_API_KEY as secret_key
         if secret_key and secret_key != "your_actual_gemini_api_key_here":
-            print("✅ Secrets file contains API key")
+            print("✅ API secrets file contains API key")
         else:
-            print("❌ Secrets file has placeholder API key")
+            print("❌ API secrets file has placeholder API key")
     except ImportError:
-        print("❌ Secrets file not found")
+        print("❌ API secrets file not found")
     
     # Check config file
     if GEMINI_API_KEY and GEMINI_API_KEY != "your_actual_gemini_api_key_here":
